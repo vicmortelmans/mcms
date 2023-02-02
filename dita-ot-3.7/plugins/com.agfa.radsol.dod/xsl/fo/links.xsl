@@ -1,0 +1,157 @@
+<?xml version='1.0'?>
+
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:fo="http://www.w3.org/1999/XSL/Format"
+    xmlns:opentopic-mapmerge="http://www.idiominc.com/opentopic/mapmerge"
+    xmlns:opentopic-func="http://www.idiominc.com/opentopic/exsl/function"
+    xmlns:related-links="http://dita-ot.sourceforge.net/ns/200709/related-links"
+    xmlns:dita-ot="http://dita-ot.sourceforge.net/ns/201007/dita-ot"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    exclude-result-prefixes="dita-ot opentopic-mapmerge opentopic-func related-links xs"
+    version="2.0">
+  
+  <!-- Plugin com.agfa.radsol.dod render minitocs on only the higest two header levels -->
+  <xsl:template name="ul-child-links">
+    <xsl:message>Plugin com.agfa.radsol.dod links.xsl template "ul-child-links" only allow if number of child topics &gt; 1 or if number of ancestor topics &lt; 3</xsl:message>
+    <xsl:if test="count(*[contains(@class, ' topic/topic ')]) &gt; 1 or count(ancestor::*[contains(@class, ' topic/topic ')]) &lt; 3">
+      <xsl:variable name="children"
+                    select="descendant::*[contains(@class, ' topic/link ')]
+                                         [@role = ('child', 'descendant')]
+                                         [not(parent::*/@collection-type = 'sequence')]
+                                         [not(ancestor::*[contains(@class, ' topic/linklist ')])]"/>
+      <xsl:if test="$children">
+        <fo:list-block xsl:use-attribute-sets="related-links.ul">
+          <xsl:for-each select="$children[generate-id(.) = generate-id(key('link', related-links:link(.))[1])]">
+            <fo:list-item xsl:use-attribute-sets="related-links.ul.li">
+              <xsl:call-template name="commonattributes"/>
+              <fo:list-item-label xsl:use-attribute-sets="related-links.ul.li__label">
+                <fo:block xsl:use-attribute-sets="related-links.ul.li__label__content">
+                  <xsl:call-template name="getVariable">
+                    <xsl:with-param name="id" select="'Unordered List bullet'"/>
+                  </xsl:call-template>
+                </fo:block>
+              </fo:list-item-label>
+              <fo:list-item-body xsl:use-attribute-sets="related-links.ul.li__body">
+                <fo:block xsl:use-attribute-sets="related-links.ul.li__content">
+                  <xsl:apply-templates select="."/>
+                </fo:block>
+              </fo:list-item-body>
+            </fo:list-item>
+          </xsl:for-each>
+        </fo:list-block>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
+  
+  <!-- Plugin com.agfa.radsol.dod render minitocs on only the higest two header levels -->
+  <xsl:template name="ol-child-links">
+    <xsl:message>Plugin com.agfa.radsol.dod links.xsl template "ol-child-links" only allow if number of child topics &gt; 1 or if number of ancestor topics &lt; 3</xsl:message>
+    <xsl:if test="count(*[contains(@class, ' topic/topic ')]) &gt; 1 or count(ancestor::*[contains(@class, ' topic/topic ')]) &lt; 3">
+      <xsl:variable name="children"
+                    select="descendant::*[contains(@class, ' topic/link ')]
+                                         [@role = ('child', 'descendant')]
+                                         [parent::*/@collection-type = 'sequence']
+                                         [not(ancestor::*[contains(@class, ' topic/linklist ')])]"/>
+      <xsl:if test="$children">
+        <fo:list-block xsl:use-attribute-sets="related-links.ol">
+          <xsl:for-each select="($children[generate-id(.) = generate-id(key('link', related-links:link(.))[1])])">
+            <fo:list-item xsl:use-attribute-sets="related-links.ol.li">
+              <xsl:call-template name="commonattributes"/>
+              <fo:list-item-label xsl:use-attribute-sets="related-links.ol.li__label">
+                <fo:block xsl:use-attribute-sets="related-links.ol.li__label__content">
+                  <xsl:call-template name="getVariable">
+                    <xsl:with-param name="id" select="'Ordered List Number'"/>
+                    <xsl:with-param name="params">
+                      <number>
+                        <xsl:value-of select="position()"/>
+                      </number>
+                    </xsl:with-param>
+                  </xsl:call-template>
+                </fo:block>
+              </fo:list-item-label>
+              <fo:list-item-body xsl:use-attribute-sets="related-links.ol.li__body">
+                <fo:block xsl:use-attribute-sets="related-links.ol.li__content">
+                  <xsl:apply-templates select="."/>
+                </fo:block>
+              </fo:list-item-body>
+            </fo:list-item>
+          </xsl:for-each>
+        </fo:list-block>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- Plugin com.agfa.radsol.dod grouping all related topics in one list, instead of the
+       separate lists for concepts, tasks and references that are generated by default.
+       The logic behind is in org.dita.base/xsl/common/related-links.xsl but quite impenetrable;
+       These templates come from org.dita.pdf2/xsl/fo/links.xsl and return 'topics' for
+       get-group on all types, while rendering "Related information" as a header on all
+       type groups. -->
+
+  <!-- Wrapper for concept group: "Related concepts" in a <div>. -->
+  <xsl:template match="*[contains(@class, ' topic/link ')][@type='concept' or 'reference' or 'task']" 
+                mode="related-links:result-group"
+                name="related-links:result.topics" as="element()?" priority="10">
+    <xsl:param name="links" as="node()*"/>
+    <xsl:if test="normalize-space(string-join($links, ''))">
+      <linklist class="- topic/linklist " outputclass="relinfo relconcepts">
+        <xsl:copy-of select="ancestor-or-self::*[@xml:lang][1]/@xml:lang"/>
+        <title class="- topic/title ">
+          <xsl:call-template name="getVariable">
+            <xsl:with-param name="id" select="'Related information'"/>
+          </xsl:call-template>
+        </title>
+        <xsl:copy-of select="$links"/>
+      </linklist>
+    </xsl:if>
+  </xsl:template>
+  
+  <!-- All types have share one group "topics". -->
+  <xsl:template match="*[contains(@class, ' topic/link ')][@type='concept' or 'task' or 'reference']" mode="related-links:get-group"
+    name="related-links:group.topics"
+    as="xs:string"
+    priority="10">
+    <xsl:text>topics</xsl:text>
+  </xsl:template>
+  
+
+  <!-- Plugin com.agfa.radsol.dod this template was rendering empty fo-blocks which made the keep-with-* attributes
+  ineffective, so I'm now rendering into a veriable first and then only outputting non-empty fo-blocks -->
+  <xsl:template match="*[contains(@class,' topic/related-links ')]">
+    <xsl:if test="exists($includeRelatedLinkRoles)">
+      <xsl:variable name="rendering">
+        <xsl:if test="$includeRelatedLinkRoles = ('child', 'descendant')">
+          <xsl:call-template name="ul-child-links"/>
+          <xsl:call-template name="ol-child-links"/>
+        </xsl:if>
+        <!--xsl:if test="$includeRelatedLinkRoles = ('next', 'previous', 'parent')">
+          <xsl:call-template name="next-prev-parent-links"/>
+        </xsl:if-->
+        <xsl:variable name="unordered-links" as="element()*">
+          <xsl:apply-templates select="." mode="related-links:group-unordered-links">
+            <xsl:with-param name="nodes"
+                            select="descendant::*[contains(@class, ' topic/link ')]
+                                                 [not(related-links:omit-from-unordered-links(.))]
+                                                 [generate-id(.) = generate-id(key('hideduplicates', related-links:hideduplicates(.))[1])]"/>
+          </xsl:apply-templates>
+        </xsl:variable>
+        <xsl:apply-templates select="$unordered-links"/>
+        <!--linklists - last but not least, create all the linklists and their links, with no sorting or re-ordering-->
+        <xsl:apply-templates select="*[contains(@class, ' topic/linklist ')]"/>
+      </xsl:variable>
+      <xsl:choose>
+        <xsl:when test="$rendering/*">
+          <xsl:message>Plugin com.agfa.radsol.dod links.xsl template "topic/related-links" rendering related links table for <xsl:value-of select="ancestor::*[contains(@class, ' topic/topic ')]/title"/></xsl:message>
+          <fo:block xsl:use-attribute-sets="related-links">
+            <fo:block xsl:use-attribute-sets="related-links__content">
+              <xsl:copy-of select="$rendering"/>
+            </fo:block>
+          </fo:block>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:message>Plugin com.agfa.radsol.dod links.xsl template "topic/related-links" suppressing related links table for <xsl:value-of select="ancestor::*[contains(@class, ' topic/topic ')]/title"/> because it's empty</xsl:message>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+</xsl:stylesheet>

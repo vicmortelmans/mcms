@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<strings>
+
+    <!-- The heading string to put at the top of the Table of Contents -->
+<str name="Table of Contents">内容</str>
+
+    <!-- The header that appears on the odd-numbered table of contents          pages. --> 
+<variable id="Toc odd header"><param ref-name="prodname"/> | 内容 | <param ref-name="pagenum"/></variable>
+
+    <!-- The header that appears on the odd-numbered table of contents          pages. --> 
+<variable id="Toc even header"><param ref-name="pagenum"/> | <param ref-name="prodname"/> | 内容</variable>
+
+    <!-- The heading to put at the top of a chapter when creating a          chapter-level "mini-TOC" -->
+<str name="Mini Toc">トピック:</str>
+
+    <!-- Text to use for 'Note' label generated from <note> element. -->
+<str name="Note">注記</str>
+
+    <!-- Text to use for 'Note' label generated from <note> element           with 'type' attribute set to 'caution'. -->
+<str name="Caution">注意</str>
+
+    <!-- Text to use for labels generated from <note> element. -->
+<str name="Warning">警告</str>
+<str name="Instruction">インストラクション</str>
+
+    <!-- Text to use for related links label.          Renders as part of <related-links> element. -->
+<str name="Related Links">関連リンク</str>
+
+    <!-- AMCAJ - The subtitle that appears on the frontpage for User Manuals. -->
+<str name="Subtitle user_manual">ユーザーマニュアル</str>
+
+    <!-- AMCAJ - The subtitle that appears on the frontpage for Key User Manuals. -->
+<str name="Subtitle key_manual">キーユーザーマニュアル</str>
+
+    <!-- AMCAJ - The subtitle that appears on the frontpage for Reference Manuals. -->
+<str name="Subtitle reference_manual">レファレンスマニュアル</str>
+
+    <!-- AMCAJ - The subtitle that appears on the frontpage for Getting Started guides. -->
+<str name="Subtitle getting_started">はじめに</str>
+
+    <!-- AMCAJ - A string that is used in the navigation pages. -->
+<str name="Subtitle user_documentation">ユーザー ドキュメンテーション</str>
+
+    <!-- AMCAJ - A string that is used in the navigation pages. -->
+<str name="Subtitle browse_online_help">(オンラインヘルプの閲覧)</str>
+
+    <!-- AMCAJ - A string that is used in the navigation pages. -->
+<str name="Subtitle english_only">(英語のみ)</str>
+
+<!-- BELOW THIS LINE, NO TRANSLATION IS NEEDED -->
+
+    <!-- Image path to use for a note of "note" type. -->
+    <str name="note Note Image Path">Configuration/OpenTopic/cfg/common/artwork/note.svg</str>
+
+    <!-- Image path to use for a note of "caution" type. -->
+    <str name="caution Note Image Path">Configuration/OpenTopic/cfg/common/artwork/caution.svg</str>
+
+    <!-- Image path to use for a note of "warning" type. -->
+    <str name="warning Note Image Path">Configuration/OpenTopic/cfg/common/artwork/warning.svg</str>
+
+    <!-- Image path to use for a note of "warning" type. -->
+    <str name="s4-danger Note Image Path">Configuration/OpenTopic/cfg/common/artwork/warning.svg</str>
+
+    <!-- Image path to use for a note of "warning" type. -->
+    <str name="s3-warning Note Image Path">Configuration/OpenTopic/cfg/common/artwork/warning.svg</str>
+
+    <!-- Image path to use for a note of "warning" type. -->
+    <str name="s2-caution Note Image Path">Configuration/OpenTopic/cfg/common/artwork/warning.svg</str>
+
+    <!-- Image path to use for a note of "warning-radiation" type. -->
+    <str name="warning-radiation Note Image Path">Configuration/OpenTopic/cfg/common/artwork/warning-radiation.svg</str>
+
+    <!-- Image path to use for a note of "instruction" type. -->
+    <str name="instruction Note Image Path">Configuration/OpenTopic/cfg/common/artwork/instruction.svg</str>
+
+    <!-- Image path to use for a note of "instruction" type. -->
+    <str name="s1-instruction Note Image Path">Configuration/OpenTopic/cfg/common/artwork/instruction.svg</str>
+
+    <!-- Image path to use for a note of "prohibition" type. -->
+    <str name="s1-prohibition Note Image Path">Configuration/OpenTopic/cfg/common/artwork/prohibition.svg</str>
+
+    <!-- Image path to use for a small Agfa logo. -->
+    <str name="logo Small Image Path">Configuration/OpenTopic/cfg/common/artwork/agfa_logo_small.svg</str>
+
+    <!-- The footer that appears on odd-numbered pages. -->
+    <variable id="Body odd footer"><param ref-name="documentnumber"/>&#xA0;<param ref-name="buildlanguage"/>&#xA0;<param ref-name="builddate"/></variable>
+
+    <!-- The footer that appears on even-numbered pages. -->
+    <variable id="Body even footer"><param ref-name="documentnumber"/>&#xA0;<param ref-name="buildlanguage"/>&#xA0;<param ref-name="builddate"/></variable>
+
+    <!-- The footer that appears on the first page of a chapter. -->
+    <variable id="Body first footer"><param ref-name="documentnumber"/>&#xA0;<param ref-name="buildlanguage"/>&#xA0;<param ref-name="builddate"/></variable>
+
+    <!-- The footer that appears on the last page of a chapter. -->
+    <variable id="Body last footer"><param ref-name="documentnumber"/>&#xA0;<param ref-name="buildlanguage"/>&#xA0;<param ref-name="builddate"/></variable>
+
+    <!-- The footer that appears on Preface odd-numbered pages. -->
+    <variable id="Preface odd footer"><param ref-name="documentnumber"/>&#xA0;<param ref-name="buildlanguage"/>&#xA0;<param ref-name="builddate"/></variable>
+
+    <!-- The footer that appears on Preface even-numbered pages. -->
+    <variable id="Preface even footer"><param ref-name="documentnumber"/>&#xA0;<param ref-name="buildlanguage"/>&#xA0;<param ref-name="builddate"/></variable>
+
+    <!-- The footer that appears on the first page of a Preface -->
+    <variable id="Preface first footer"><param ref-name="documentnumber"/>&#xA0;<param ref-name="buildlanguage"/>&#xA0;<param ref-name="builddate"/></variable>
+
+    <!-- The footer that appears on the first page of a Preface -->
+    <variable id="Preface last footer"><param ref-name="documentnumber"/>&#xA0;<param ref-name="buildlanguage"/>&#xA0;<param ref-name="builddate"/></variable>
+
+    <!-- The footer that appears on the odd-numbered table of contents
+         pages. --> 
+    <variable id="Toc odd footer"><param ref-name="documentnumber"/>&#xA0;<param ref-name="buildlanguage"/>&#xA0;<param ref-name="builddate"/></variable>
+
+    <!-- The footer that appears on the even-numbered table of contents
+         pages. --> 
+    <variable id="Toc even footer"><param ref-name="documentnumber"/>&#xA0;<param ref-name="buildlanguage"/>&#xA0;<param ref-name="builddate"/></variable>
+
+    <!-- The footer that appears on the odd-numbered index pages. -->
+    <variable id="Index odd footer"><param ref-name="documentnumber"/>&#xA0;<param ref-name="buildlanguage"/>&#xA0;<param ref-name="builddate"/></variable>
+
+    <!-- The footer that appears on the even-numbered index pages. -->
+    <variable id="Index even footer"><param ref-name="documentnumber"/>&#xA0;<param ref-name="buildlanguage"/>&#xA0;<param ref-name="builddate"/></variable>
+
+</strings>

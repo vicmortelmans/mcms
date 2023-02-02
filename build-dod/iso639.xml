@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<languages>
+  <language><code>bg_BG</code><xml>bg-BG</xml><docato>bg-bg</docato><filename>BG</filename><name>Български</name></language>
+  <language><code>cs_CZ</code><xml>cs-CZ</xml><docato>cs-cz</docato><filename>CS</filename><name>Česky</name></language>
+  <language><code>da_DK</code><xml>da-DK</xml><docato>da-dk</docato><filename>DA</filename><name>Dansk </name></language>
+  <language><code>de_DE</code><xml>de-DE</xml><docato>de-de</docato><filename>DE</filename><name>Deutsch</name></language>
+  <language><code>el_GR</code><xml>el-GR</xml><docato>el-gr</docato><filename>EL</filename><name>Ελληνικά</name></language>
+  <language><code>en_US</code><xml>en-US</xml><docato>en-us</docato><filename>EN</filename><name>English</name></language>
+  <language><code>es_ES</code><xml>es-ES</xml><docato>es-es</docato><filename>ES</filename><name>Español</name></language>
+  <language><code>et_EE</code><xml>et-EE</xml><docato>et-ee</docato><filename>ET</filename><name>Eesti keeles</name></language>
+  <language><code>fi_FI</code><xml>fi-FI</xml><docato>fi-fi</docato><filename>FI</filename><name>Suomi</name></language>
+  <language><code>fr_FR</code><xml>fr-FR</xml><docato>fr-fr</docato><filename>FR</filename><name>Français</name></language>
+  <language><code>hr_HR</code><xml>hr-HR</xml><docato>hr-hr</docato><filename>HR</filename><name>Hrvatski</name></language>
+  <language><code>hu_HU</code><xml>hu-HU</xml><docato>hu-hu</docato><filename>HU</filename><name>Magyar</name></language>
+  <language><code>it_IT</code><xml>it-IT</xml><docato>it-it</docato><filename>IT</filename><name>Italiano </name></language>
+  <language><code>ja_JP</code><xml>ja-JP</xml><docato>ja-jp</docato><filename>JA</filename><name>日本語</name></language>
+  <language><code>ko_KR</code><xml>ko-KR</xml><docato>ko-kr</docato><filename>KO</filename><name>한 국어</name></language>
+  <language><code>lt_LT</code><xml>lt-LT</xml><docato>lt-lt</docato><filename>LT</filename><name>Lietuviškai</name></language>
+  <language><code>lv_LV</code><xml>lv-LV</xml><docato>lv-lv</docato><filename>LV</filename><name>Latviešu valoda </name></language>
+  <language><code>nl_NL</code><xml>nl-NL</xml><docato>nl-nl</docato><filename>NL</filename><name>Nederlands </name></language>
+  <language><code>no_NO</code><xml>no-NO</xml><docato>nb-no</docato><filename>NO</filename><name>Norsk</name></language>
+  <language><code>pl_PL</code><xml>pl-PL</xml><docato>pl-pl</docato><filename>PL</filename><name>Polski</name></language>
+  <language><code>pt_BR</code><xml>pt-BR</xml><docato>pt-br</docato><filename>PT-BR</filename><name>Português (Brasil)</name></language>
+  <language><code>pt_PT</code><xml>pt-PT</xml><docato>pt-pt</docato><filename>PT</filename><name>Português</name></language>
+  <language><code>ro_RO</code><xml>ro-RO</xml><docato>ro-ro</docato><filename>RO</filename><name>Română</name></language>
+  <language><code>ru_RU</code><xml>ru-RU</xml><docato>ru-ru</docato><filename>RU</filename><name>Русский</name></language>
+  <language><code>sk_SK</code><xml>sk-SK</xml><docato>sk-sk</docato><filename>SK</filename><name>Slovenčina</name></language>
+  <language><code>sl_SI</code><xml>sl-SI</xml><docato>sl-si</docato><filename>SL</filename><name>Slovenščina</name></language>
+  <language><code>sv_SE</code><xml>sv-SE</xml><docato>sv-se</docato><filename>SV</filename><name>Svenska</name></language>
+  <language><code>th_TH</code><xml>th-TH</xml><docato>th-th</docato><filename>TH</filename><name>ตัวอักษรไทย</name></language>
+  <language><code>tr_TR</code><xml>tr-TR</xml><docato>tr-tr</docato><filename>TR</filename><name>Türkçe</name></language>
+  <language><code>vi_VN</code><xml>vi-VN</xml><docato>vi-vn</docato><filename>VI</filename><name>Tiếng Việt</name></language>
+  <language><code>zh_CN</code><xml>zh-CN</xml><docato>zh-cn</docato><filename>ZH-CN</filename><name>简体中文</name></language>
+  <language><code>zh_TW</code><xml>zh-TW</xml><docato>zh-tw</docato><filename>ZH-TW</filename><name>繁體中文</name></language>
+</languages>

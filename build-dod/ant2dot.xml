@@ -1,0 +1,21 @@
+<project name="ant2dot" default="ant2dot"  basedir=".">
+
+  <target name="ant2dot">
+
+    <xslt in="build-dod.xml" out="build-dod.dot"
+        style="ant2dot.xsl">
+    </xslt>
+
+    <exec executable="dot">
+      <arg value="-Tpng"/>
+      <arg value="build-dod.dot"/>
+      <arg value="-o"/>
+      <arg value="build-dod.png"/>
+    </exec>
+
+    <delete file="build-dod.dot"/>
+
+  </target>
+
+</project>
+

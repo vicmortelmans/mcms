@@ -1,0 +1,837 @@
+﻿<?xml version="1.0"?>
+<!-- Created by XMetaL style generator. (c)2006 Justsystems Canada Inc. All rights reserved. -->
+<!DOCTYPE DTDExtensions SYSTEM "ctm.dtd">
+<DTDExtensions Version="2.0">
+  <ElementPropertiesList>
+    <GlobalPrettyPrintOptions><NoPrettyPrinting/><IndentAmount>2</IndentAmount>
+      <MaxLineLength>80</MaxLineLength>
+    </GlobalPrettyPrintOptions>
+    <ElementProperties>
+      <Name ns="">a</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">abbr</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">acronym</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">address</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">applet</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">area</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">b</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">base</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">basefont</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">bdo</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">big</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">blockquote</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">body</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">br</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">button</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">caption</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">center</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">cite</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">code</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">col</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">colgroup</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">dd</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">del</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">dfn</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">dir</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">div</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">dl</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">dt</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">em</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">fieldset</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">font</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">form</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">h1</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">h2</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">h3</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">h4</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">h5</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">h6</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">head</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">hr</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">html</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">i</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">iframe</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">img</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">input</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">ins</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">isindex</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">kbd</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">label</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">legend</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">li</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">link</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">map</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">menu</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">meta</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">noframes</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">noscript</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">object</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">ol</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">optgroup</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">option</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">p</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">param</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">pre</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">q</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">s</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">samp</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">script</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">select</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">small</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">span</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">strike</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">strong</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">style</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">sub</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">sup</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">table</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">tbody</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">td</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">textarea</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">tfoot</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">th</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">thead</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">title</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">tr</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">tt</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">u</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">ul</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+    <ElementProperties>
+      <Name ns="">var</Name>
+      <PrettyPrintOptions>
+        <IndentContent/>
+        <NewLineBeforeEndTag/>
+        <NewLineBeforeStartTag/>
+      </PrettyPrintOptions>
+    </ElementProperties>
+  </ElementPropertiesList>
+  <Images>
+    <Image>
+      <Name ns="">img</Name>
+      <Source-Attribute>src</Source-Attribute>
+      <Height-Attribute>height</Height-Attribute>
+      <Width-Attribute>width</Width-Attribute>
+      <AltText-Attribute>alt</AltText-Attribute>
+    </Image>
+  </Images>
+  <ListElements>
+    <NumberedList>
+      <Name ns="">ol</Name>
+      <ListItem ns="">li</ListItem>
+    </NumberedList>
+    <BulletedList>
+      <Name ns="">ul</Name>
+      <ListItem ns="">li</ListItem>
+    </BulletedList>
+    <DefinitionList>
+      <Name ns="">dl</Name>
+      <DefinitionTerm ns="">dt</DefinitionTerm>
+      <DefinitionDefinition ns="">dd</DefinitionDefinition>
+    </DefinitionList>
+  </ListElements>
+  <TogglingInlines>
+    <Bold>
+      <Name ns="">b</Name>
+    </Bold>
+    <Italic>
+      <Name ns="">i</Name>
+    </Italic>
+    <Bold>
+      <Name ns="">strong</Name>
+    </Bold>
+    <Underline>
+      <Name ns="">u</Name>
+    </Underline>
+  </TogglingInlines>
+  <Paragraphs>
+    <Paragraph>
+      <Name ns="">p</Name>
+    </Paragraph>
+  </Paragraphs>
+  <FollowedByList>
+    <FollowedByListItem>
+      <Name ns="">p</Name>
+      <FollowedBy ns="">p</FollowedBy>
+    </FollowedByListItem>
+    <FollowedByListItem>
+      <Name ns="">ol</Name>
+      <FollowedBy ns="">p</FollowedBy>
+    </FollowedByListItem>
+    <FollowedByListItem>
+      <Name ns="">ul</Name>
+      <FollowedBy ns="">p</FollowedBy>
+    </FollowedByListItem>
+    <FollowedByListItem>
+      <Name ns="">dd</Name>
+      <FollowedBy ns="">dt</FollowedBy>
+    </FollowedByListItem>
+    <FollowedByListItem>
+      <Name ns="">dt</Name>
+      <FollowedBy ns="">dd</FollowedBy>
+    </FollowedByListItem>
+    <FollowedByListItem>
+      <Name ns="">title</Name>
+      <FollowedBy ns="">p</FollowedBy>
+    </FollowedByListItem>
+    <FollowedByListItem>
+      <Name ns="">table</Name>
+      <FollowedBy ns="">p</FollowedBy>
+    </FollowedByListItem>
+    <FollowedByListItem>
+      <Name ns="">img</Name>
+      <FollowedBy ns="">p</FollowedBy>
+    </FollowedByListItem>
+    <FollowedByListItem>
+      <Name ns="">a</Name>
+      <FollowedBy ns="">p</FollowedBy>
+    </FollowedByListItem>
+  </FollowedByList>
+  <Templates>
+    <Template>
+      <Name ns="">p</Name>
+      <MiniTemplate><![CDATA[<p><?xm-replace_text Type new p here ?></p>]]></MiniTemplate>
+    </Template>
+    <Template>
+      <Name ns="">title</Name>
+      <MiniTemplate><![CDATA[<title><?xm-replace_text Type new title here ?></title>]]></MiniTemplate>
+    </Template>
+    <Template>
+      <Name ns="">li</Name>
+      <MiniTemplate><![CDATA[<li><?xm-replace_text Type new li here ?></li>]]></MiniTemplate>
+    </Template>
+    <Template>
+      <Name ns="">ol</Name>
+      <MiniTemplate><![CDATA[<ol><li><?xm-replace_text Type new li here ?></li></ol>]]></MiniTemplate>
+    </Template>
+    <Template>
+      <Name ns="">ul</Name>
+      <MiniTemplate><![CDATA[<ul><li><?xm-replace_text Type new li here ?></li></ul>]]></MiniTemplate>
+    </Template>
+    <Template>
+      <Name ns="">dd</Name>
+      <MiniTemplate><![CDATA[<dd><?xm-replace_text Type new dd here ?></dd>]]></MiniTemplate>
+    </Template>
+    <Template>
+      <Name ns="">dt</Name>
+      <MiniTemplate><![CDATA[<dt><?xm-replace_text Type new dt here ?></dt>]]></MiniTemplate>
+    </Template>
+    <Template>
+      <Name ns="">dl</Name>
+      <MiniTemplate><![CDATA[<dl><dt><?xm-replace_text Type new dt here ?></dt><dd><?xm-replace_text Type new dd here ?></dd></dl>]]></MiniTemplate>
+    </Template>
+  </Templates>
+</DTDExtensions>

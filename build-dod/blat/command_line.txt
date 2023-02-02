@@ -1,0 +1,3 @@
+blat.exe all_users.txt -s "Build ready" -tf mail_allusers.txt -cf copy_mail.txt -f vic.mortelmans@agfa.com -server mailhost.agfa.be -log log.txt
+blat.exe all_users.txt -s "Build ready" -tf mail_allusers.txt -f vic.mortelmans@agfa.com -server mailhost.agfa.be -log log.txt
+blat.exe - -s "Build ready" -tf mail_allusers.txt -f vic.mortelmans@agfa.com -server mailhost.agfa.be -log log.txt -body "The build is ready at: file:///O:\temp\282.1457361880204\output"

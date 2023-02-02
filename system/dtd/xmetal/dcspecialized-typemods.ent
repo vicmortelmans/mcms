@@ -1,0 +1,46 @@
+<!-- ============================================================= -->
+<!--                                                               -->
+<!--  (c) 2008 Justsystems Canada Inc. All Rights Reserved         -->
+<!--                                                               -->
+<!-- ============================================================= -->
+<!--                    HEADER                                     -->
+<!-- ============================================================= -->
+<!--  MODULE:    DITA Component Specialized Typemods ENTITIES      -->
+<!--  VERSION:   1.1                                               -->
+<!--  DATE:      April 2008                                        -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--             PUBLIC DOCUMENT TYPE DEFINITION                   -->
+<!--                  TYPICAL INVOCATION                           -->
+<!--                                                               -->
+<!--  Refer to this file by the following public identfier 
+
+PUBLIC "-//XMETAL//DTD DITA Component Specialized Typemods//EN"
+
+OR
+
+PUBLIC "-//XMETAL//DTD DITA 1.1 Component Specialized Typemods//EN"
+
+      Delivered as file "dcspecialized-typemods.ent"               -->
+
+<!-- ============================================================= -->
+<!--         SPECIALIZED TYPEMODS AS ENTITY DECLARATIONS           -->
+<!-- ============================================================= -->
+
+<!-- SPECIALIZER-TODO: Add ENTITY declaration + expansion for your -->
+<!-- specialized MOD file                                          -->
+
+<!-- EXAMPLES
+<!ENTITY % element-ref-mod SYSTEM "C:\Program Files\Common Files\XMetaL Shared\DITA_OT\demo\elementref\elementref.mod" >
+ %element-ref-mod;
+
+<!ENTITY % faq-shell-mod SYSTEM "C:\Program Files\Common Files\XMetaL Shared\DITA_OT\demo\faq\faq.mod" >
+ %faq-shell-mod;
+
+<!ENTITY % enote-shell-mod SYSTEM "C:\Program Files\Common Files\XMetaL Shared\DITA_OT\demo\enote\enote.mod" >
+ %enote-shell-mod;
+-->
+
+<!-- ========== End Specialized Typemods as Entities  =========== -->

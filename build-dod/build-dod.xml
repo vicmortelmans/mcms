@@ -1,0 +1,441 @@
+<project name="build-dod" default="build-do"  basedir=".">
+
+  <!-- Build script for creating "User Documentation Design Output"
+       Input parameters to be provided on the command line (-D):
+        -Dexport.dir=...   e.g. D:\mcmsm\ - where 'authoring' and 'published' are
+        -Dditamap.file=...   e.g. D:\mcmsm\published\nl-nl\xob1585897131743.ditamap_20201201-1536_MjAyMDEyMDEgMTUzNg\xob1585897131743_202301300844_003.ditamap
+        -Ddita.dir=...     e.g. D:\mcmsm\dita-ot-3.7
+        -Dbuild.dir=...     e.g. D:\mcmsm\build\
+       Output:
+        - a massive amount of logging on stderr
+        - in builddir a timestamped directory containing all build files
+          (note that there's also a temp folder in dita-ot-3.7/temp)
+    -->
+
+  <!-- START OF Settings that can be changed manually in this script: -->
+
+  <!-- change the language for draft building in other languages -->
+  <property name="languageId" value="en_US"/><!-- default = en_US -->
+  <property name="draft" value="pdf"/><!-- output format for building single ditamap: only option is pdf -->
+  <!-- uncomment following line for dry-running (no PDF/HTML generated) -->
+  <!--touch file="${tempdir}/subants-done"/-->
+
+  <!-- END OF Settings that can be changed manually in this script -->
+
+  <!-- Generate timestamp for output folder -->
+  <tstamp>
+    <format property="TIMESTAMP" pattern="yyyyMMddhhmmss"/>
+  </tstamp>
+
+  <!-- User forward slashes in paths -->
+  <pathconvert targetos="unix" property="exportdir"> <path location="${export.dir}"/> </pathconvert>
+  <pathconvert targetos="unix" property="ditamap"> <path location="${ditamap.file}"/> </pathconvert>
+  <pathconvert targetos="unix" property="ditadir"> <path location="${dita.dir}"/> </pathconvert>
+  <pathconvert targetos="unix" property="builddir"> <path location="${build.dir}"/> </pathconvert>
+
+  <!-- Derived properties -->
+  <basename property="ditamapbasename" file="${ditamap}"/>
+  <dirname property="ditamapdir.win" file="${ditamap}"/>
+  <pathconvert targetos="unix" property="ditamapdir"> <path location="${ditamapdir.win}"/> </pathconvert>
+
+  <dirname property="templatedir" file="${ditadir}"/>
+  <property name="plugindir" value="${ditadir}/plugins/com.agfa.radsol.dod"/>  
+  <property name="tempdir" value="${builddir}/${TIMESTAMP}_${ditamapbasename}"/>
+  <property name="outputdir" value="${tempdir}/output"/>
+  <property name="stagedir" value="${outputdir}/staging"/>
+  <property name="dod" value="${tempdir}/dod.xml"/>
+  <!-- ${builddir} / <TIMESTAMP>_<DITAMAP_NAME>
+       \______________________________________/
+                           =     ${tempdir}     / output
+       \_______________________________________________/
+                                   =    ${outputdir}     / staging
+       \_________________________________________________________/
+                                           =    ${stagedir}
+    --> 
+
+  <!-- Create new dirs -->
+  <!--mkdir dir="${outputdir}"/-->
+  <!--mkdir dir="${tempdir}"/-->
+  <mkdir dir="${stagedir}"/>
+
+  <!-- Setup logging -->
+  <record name="${tempdir}/log.txt" loglevel="verbose"/>
+
+  <!-- Find the ditamap -->
+  <!--basename property="exportid" file="${exportdir}"/>
+  <path id="ditamap.file.id">
+    <fileset dir="${exportdir}" erroronmissingdir="false" includes="**/${exportid}.ditamap"/>
+  </path>
+  <property name="ditamap" refid="ditamap.file.id"/-->
+
+
+  <!-- set a property that can be tested to see if a DOD ditamap is built, or a single document. 
+       For this to work, all DOD-ditamaps must contain a comment with the required string in it -->
+  <target name="dodTest"><!-- FALSE: building single ditamap; TRUE: building "Design Output Definition" ditamap -->
+    <condition property="dodTest">
+      <resourcecontains resource="${ditamap}" substring="Design Output Definition"/>
+    </condition>    
+  </target>
+
+  <!-- Log properties -->
+  <!--echo message="build-dod.xml: exportid: ${exportid}"/-->
+  <echo message="build-dod.xml: exportdir: ${exportdir}"/>
+  <echo message="build-dod.xml: ditamapdir: ${ditamapdir}"/>
+  <echo message="build-dod.xml: tempdir: ${tempdir}"/>
+  <echo message="build-dod.xml: stagedir: ${stagedir}"/>
+  <echo message="build-dod.xml: outputdir: ${outputdir}"/>
+  <echo message="build-dod.xml: ditamap: ${ditamap}"/>
+  <echo message="build-dod.xml: dod: ${dod}"/>
+  <echo message="build-dod.xml: javax.xml.transform.TransformerFactory: ${javax.xml.transform.TransformerFactory}"/>
+  <property environment="env"/>
+  <echo message="build-dod.xml: Properties for DO build:"/>
+  <echo message="build-dod.xml: ************************"/>
+  <echo message="build-dod.xml: DITA_DIR: ${env.DITA_DIR}"/>  
+  <echo message="build-dod.xml: ANT_OPTS: ${env.ANT_OPTS}"/>  
+  <echo message="build-dod.xml: ANT_HOME: ${env.ANT_HOME}"/>  
+  <echo message="build-dod.xml: PATH: ${PATH}"/>  
+  <echo message="build-dod.xml: CLASSPATH: ${CLASSPATH}"/>  
+  <echoproperties/>
+
+  <!-- Remove DOCTYPE and IXIASOFT-custom attribute from exported files -->
+  <!--loadresource property="templatedirescaped">
+    <propertyresource name="templatedir"/>
+    <filterchain>
+      <tokenfilter>
+        <filetokenizer/>
+        <replacestring from="\" to="\\\\"/>
+      </tokenfilter>
+    </filterchain>
+  </loadresource-->
+
+
+
+  <!-- MAIN TARGET -->
+  <target name="build-do" depends="subants,publication,browsefile-and-iso"/>
+  
+  <!-- only for "Design Output Definition ditamaps -->
+
+  <!-- also for single ditamaps -->
+  <!-- do some replacements in the exported files -->  
+  <target name="check-tweak-ixiasoft-export-done">
+    <available file="${tempdir}/tweak-ixiasoft-export-done" property="tweak-ixiasoft-export-done"/>
+  </target>
+  <target name="tweak-ixiasoft-export" depends="check-tweak-ixiasoft-export-done" unless="tweak-ixiasoft-export-done">
+    <tstamp prefix="tweak-ixiasoft-export-start"/>
+    <echo message="build-dod.xml tweak-ixiasoft-export: TIME: ${tweak-ixiasoft-export-start.TSTAMP}"/>
+    <echo message="build-dod.xml tweak-ixiasoft-export: Removing ixia_locid attributes from .xml and .ditamap files in ${ditamapdir}/../"/>
+    <!--replaceregexp byline="true" flags="g" encoding="utf-8">
+      <regexp pattern=' ixia_locid="[0-9]+"'/>
+      <substitution expression=""/>
+      <fileset dir="${exportdir}">
+        <include name="**/*.ditamap"/>
+        <include name="**/*.xml"/>
+      </fileset>
+    </replaceregexp>
+    <replaceregexp byline="true" flags="g" encoding="utf-8">
+      <regexp pattern='\.image"'/>
+      <substitution expression='.svg"'/>
+      <fileset dir="${exportdir}">
+        <include name="**/*.xml"/>
+      </fileset>
+    </replaceregexp>
+    <echo message="build-dod.xml tweak-ixiasoft-export: Renaming '*.image' to '*.svg'"/>
+    <move todir="${exportdir}">
+      <fileset dir="${exportdir}"/>
+      <mapper type="glob" from="*.image" to="*.svg"/>
+    </move-->
+    <!-- following two targets are commented out; the second was replaced by the first
+         but the first was very time consuming, so it's better to mend the images on
+         the CMS before generating output -->
+    <!-- inkscape can clean up SVG files, to remove DOCTYPE and other rubbish typically found
+         in files converted by Adobe Illustrator -->
+    <!--echo message="build-dod.xml tweak-ixiasoft-export: Removing DOCTYPE from .svg"/>
+    <apply executable="D:\sApps\Ixiasoft\Inkscape-1.1.2\bin\inkscape.com" dest="${exportdir}" force="true">
+      <arg value="-#-vacuum-defs"/>
+      <arg value="-#-export-plain-svg"/>
+      <arg value="-#-export-filename"/>
+      <targetfile/>
+      <srcfile/>
+      <fileset dir="${exportdir}">
+        <include name="**/*.svg"/>
+      </fileset>
+      <identitymapper/>
+    </apply-->
+    <!-- SVG files with DOCTYPE raise "I/O error reported by XML parser" in topicpull.xsl -->
+    <!--replaceregexp byline="true" flags="g" encoding="utf-8">
+      <regexp pattern='^.*&lt;!DOCTYPE.*$|^.*&lt;!ENTITY.*$|^]&gt;$|^.*http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd.*$'/>
+      <substitution expression=""/>
+      <fileset dir="${exportdir}">
+        <include name="**/*.svg"/>
+      </fileset>
+    </replaceregexp-->
+    <touch file="${tempdir}/tweak-ixiasoft-export-done"/>
+  </target>
+
+  <!-- unzip DTD files, run dod_merge.xslt and dod.xslt -->
+  <target name="dod" depends="dodTest" if="dodTest">
+    <!--echo message="build-dod.xml dod: Unzipping DTD files into ${ditamapdir}/../../system/"/>
+    <unzip src="${templatedir}/build-dod/dtd.zip" dest="${ditamapdir}/../../system/"/>
+    <echo message="build-dod.xml dod: Unzipping DTD files into ${ditamapdir}/../published/system/"/>
+    <mkdir dir="${ditamapdir}/../published/system/"/>
+    <unzip src="${templatedir}/build-dod/dtd.zip" dest="${ditamapdir}/../published/system/"/-->
+    <!-- parsing DOD configuration from ditamap -->
+    <xslt in="${ditamap}" out="${dod}_merged.xml"
+        extension=".xml" style="${templatedir}\build-dod\dod_merge.xslt">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../catalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+    </xslt>
+    <xslt in="${dod}_merged.xml" out="${dod}"
+        extension=".xml" style="${templatedir}\build-dod\dod.xslt">
+    </xslt>
+  </target>
+
+  <!-- unzip placeholders, unzip default navigation files, run antfiles.xslt -->
+  <target name="check-antfiles-done-or-not-dod" depends="dodTest">
+    <condition property="antfiles-done-or-not-dod">
+      <or>
+        <available file="${tempdir}/antfiles-done" property="antfiles-done"/>
+        <isfalse value="${dodTest}"/>
+      </or>
+    </condition>
+  </target>
+  <target name="antfiles" depends="check-antfiles-done-or-not-dod,tweak-ixiasoft-export,dod" unless="antfiles-done-or-not-dod">
+    <!-- unzip the placeholders -->
+    <antcall target="placeholders"/>
+    <!-- unzip the default navigation files -->
+    <antcall target="navigation"/>
+    <tstamp prefix="antfiles-start"/>
+    <echo message="build-dod.xml antfiles: TIME: ${antfiles-start.TSTAMP}"/>
+      <!-- running antfiles.xslt, creating a folder structure, ANT build.xml files for each HTML/PDF deliverable 
+           and a DITA-OT project.xml file -->
+    <echo message="build-dod.xml antfiles: Running antfiles.xslt"/>
+    <xslt in="${dod}" out="${tempdir}\antfiles-output.xml"
+       extension=".xml" style="${templatedir}\build-dod\antfiles.xslt">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../catalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <param name="ditamapbasename" expression="${ditamapbasename}"/>
+      <param name="ditamapdir" expression="${ditamapdir}"/>
+      <param name="draft" expression="${draft}"/>
+      <param name="exportdir" expression="${exportdir}"/>
+      <param name="templatedir" expression="${templatedir}"/>
+      <param name="plugindir" expression="${plugindir}"/>  
+      <param name="tempdir" expression="${tempdir}"/>
+      <param name="outputdir" expression="${outputdir}"/>
+      <param name="ditadir" expression="${ditadir}"/>
+      <param name="stagedir" expression="${stagedir}"/>
+    </xslt>
+    <echo message="build-dod.xml antfiles: Finished running antfiles.xslt"/>
+    <!--delete file="${tempdir}\antfiles-output.xml"/-->
+    <!--copy file="${templatedir}/ditaarch.xsd" tofile="${templatedir}/catalog/ditaarch.xsd"
+       overwrite="true"/-->
+    <touch file="${tempdir}/antfiles-done"/>
+  </target>
+
+  <target name="check-navigation-done">
+    <available file="${tempdir}/navigation-done" property="navigation-done"/>
+  </target>
+  <target name="navigation" depends="check-navigation-done" unless="navigation-done">
+    <tstamp prefix="navigation-start"/>
+    <echo message="build-dod.xml navigation: TIME: ${navigation-start.TSTAMP}"/>
+    <!-- unzipping the default navigation files -->
+    <echo message="build-dod.xml navigation: Unzipping navigation.zip"/>
+    <unzip src="${templatedir}/build-dod/navigation.zip" dest="${stagedir}"/>
+    <touch file="${tempdir}/navigation-done"/>
+  </target>
+
+  <target name="check-placeholders-done">
+    <available file="${tempdir}/placeholders-done" property="placeholders-done"/>
+  </target>
+  <target name="placeholders" depends="check-placeholders-done" unless="placeholders-done">
+    <tstamp prefix="placeholders-start"/>
+    <echo message="build-dod.xml placeholders: TIME: ${placeholders-start.TSTAMP}"/>
+    <!-- unzipping resource files containing the placeholder documents -->
+    <echo message="build-dod.xml placeholders: Unzipping placeholders"/>
+    <unzip dest="${tempdir}\placeholders">
+      <fileset dir="${ditamapdir}">
+        <include name="*.zip"/>
+        <!-- this also unzips the images, but I can't find out how to see the difference
+             actually there is a difference: the placeholders have a corresponding .res
+             file, bit I don't know how to tell Ant to only handle those zips -->
+      </fileset>
+    </unzip>
+    <unzip dest="${tempdir}\placeholders">
+      <fileset dir="${tempdir}\placeholders" erroronmissingdir="false">
+        <include name="*.zip"/>
+      </fileset>
+    </unzip>
+    <touch file="${tempdir}/placeholders-done"/>
+  </target>
+
+  <!-- also for single ditamaps -->
+  <!-- run project.xml and subants -->
+  <target name="check-subants-done">
+    <available file="${tempdir}/subants-done" property="subants-done"/>
+  </target>
+  <target name="subants" depends="check-subants-done,antfiles,antfiles-ditamap" unless="subants-done">
+    <tstamp prefix="project-start"/>
+    <echo message="build-dod.xml subants: Running project.xml"/>
+    <echo message="build-dod.xml subants: TIME: ${project-start.TSTAMP}"/>
+    <!-- executing the DITA-OT project.xml build file, generating PDF and HTML output --> 
+    <exec executable="cmd">
+      <arg value="/c"/>
+      <arg value="${dita.dir}/bin/dita.bat"/>
+      <arg value="--project=${tempdir}/project.xml"/>
+      <arg value="--verbose"/>
+      <arg value="--debug"/>
+    </exec>
+    <echo message="build-dod.xml subants: Finished running project.xml"/>
+    <tstamp prefix="subants-start"/>
+    <echo message="build-dod.xml subants: TIME: ${subants-start.TSTAMP}"/>
+    <!-- executing all build.xml scripts, copying files that are not rendered by DITA-OT. --> 
+    <echo message="build-dod.xml subants: Running series of build.xml files"/>
+    <subant>
+      <fileset dir="${tempdir}" includes="**/build.xml"/>
+    </subant>
+    <echo message="build-dod.xml subants: Finished running series of build.xml files"/>
+    <delete file="${stagedir}\OnlineHelp.exe"/>
+    <delete file="${stagedir}\ModuleOnlineHelp.exe"/>
+    <touch file="${tempdir}/subants-done"/>
+  </target>
+
+  <!-- run browsefile.xslt, create ISO file and zip it -->  
+  <target name="check-browsefile-and-iso-done">
+    <available file="${tempdir}/browsefile-and-iso-done" property="browsefile-and-iso-done"/>
+  </target>
+  <target name="browsefile-and-iso" depends="check-browsefile-and-iso-done,subants" if="dodTest" unless="check-browsefile-and-iso-done">
+    <tstamp prefix="browsefile-and-iso-start"/>
+    <echo message="build-dod.xml browsefile-and-iso: TIME: ${browsefile-and-iso-start.TSTAMP}"/>
+    <!-- running browsefile.xslt, creating deliverables -->
+    <echo message="build-dod.xml browsefile-and-iso: Running browsefile.xslt, creating deliverables"/>
+    <xslt in="${dod}" out="${outputdir}\index.html" style="${templatedir}\build-dod\browsefile.xslt">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../catalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <param name="exportdir" expression="${exportdir}"/>
+      <param name="templatedir" expression="${templatedir}"/>
+      <param name="tempdir" expression="${tempdir}"/>
+      <param name="outputdir" expression="${outputdir}"/>
+      <param name="ditadir" expression="${ditadir}"/>
+    </xslt>
+    <!--java classname="net.sf.saxon.Transform" failonerror="true" fork="true">
+      <arg value="-s:${dod}"/>
+      <arg value="-xsl:.\browsefile.xslt"/>
+      <arg value="-o:${outputdir}\index.html"/>
+      <arg value="export-dir=${ditamapdir}"/>
+      <arg value="temp-dir=${tempdir}"/>
+      <arg value="outputdir=${outputdir}"/>
+      <arg value="dita-dir=${ditadir}"/>
+    </java-->
+    <!-- reading the properties that is generated by browsefile.xslt -->
+    <property file="${tempdir}/build-dod.properties"/>
+    <!-- create ISO file -->
+    <echo message="build-dod.xml browsefile-and-iso: Creating ISO file"/>
+    <exec executable="D:\sApps\Ixiasoft\CDBurnerXP\cdbxpcmd.exe">
+      <arg value="--burn-data"/>
+      <arg value="-folder:${stagedir}"/>
+      <arg value="-name:${name}"/>
+      <arg value="-iso:${outputdir}\${isoname}"/>
+      <arg value="-changefiledates"/>
+    </exec>
+    <exec dir="${outputdir}" executable="${templatedir}/build-dod/md5sum.exe" output="${outputdir}/${md5name}">
+      <arg value="${isoname}"/>
+    </exec>
+    <!-- zip the ISO file and delete it -->
+    <zip zipfile="${outputdir}/${isoname}.zip">
+      <fileset dir="${outputdir}" includes="${isoname}"/>
+      <fileset dir="${outputdir}" includes="${md5name}"/>
+    </zip>
+    <delete>
+      <fileset dir="${outputdir}" includes="${isoname}"/>
+      <fileset dir="${outputdir}" includes="${md5name}"/>
+    </delete>
+    <touch file="${tempdir}/browsefile-and-iso-done"/>
+  </target>
+
+  <!-- also for single ditamaps -->
+  <!-- create publication.zip and send out email -->
+  <target name="check-publication-done">
+    <available file="${tempdir}/publication-done" property="publication-done"/>
+  </target>
+  <target name="publication" depends="check-publication-done" unless="publication-done">
+    <tstamp prefix="publication-start"/>
+    <echo message="build-dod.xml publication: TIME: ${publication-start.TSTAMP}"/>
+    <!-- creating publication.zip -->
+    <echo message="build-dod.xml publication: Creating publication.zip"/>
+    <zip zipfile="${outputdir}/publication.zip">
+      <fileset dir="${stagedir}">
+        <include name="**/*.*"/>
+      </fileset>
+    </zip>
+    <touch file="${tempdir}/publication-done"/>
+    <!-- sending out a mail -->
+    <loadresource property="local.outputdir">
+      <propertyresource name="outputdir"/>
+      <filterchain>
+        <tokenfilter>
+          <filetokenizer/>
+          <replacestring from=":\\BD_IMG" to="O:"/>
+        </tokenfilter>
+      </filterchain>
+    </loadresource>
+    <exec executable="${templatedir}/build-dod/blat/blat.exe">
+      <arg value="-"/>
+      <arg value="-s"/>
+      <arg value="Build ready"/>
+      <arg value="-tf"/>
+      <arg value="${templatedir}/build-dod/blat/mail_allusers.txt"/>
+      <arg value="-f"/>
+      <arg value="vic.mortelmans@agfa.com"/>
+      <arg value="-server"/>
+      <arg value="mailhost.agfa.be"/>
+      <arg value="-log"/>
+      <arg value="${outputdir}/log/blat.log.txt"/>
+      <arg value="-body"/>
+      <arg value="The build is ready at: file:///${local.outputdir}"/>
+    </exec>
+  </target>
+  
+  <!-- Targets only for single ditamaps -->
+
+  <target name="antfiles-ditamap" depends="tweak-ixiasoft-export,dodTest" unless="dodTest">
+    <!-- running antfiles-ditamap.xml, creating DITA-OT project.xml script -->
+    <!--echo message="build-dod.xml antfiles-ditamap: Unzipping DTD files into ${ditamapdir}/../system/"/>
+    <unzip src="${templatedir}/build-dod/dtd.zip" dest="${ditamapdir}/../../system/"/>
+    <echo message="build-dod.xml antfiles-ditamap: Unzipping DTD files into ${ditamapdir}/../published/system/"/>
+    <unzip src="${templatedir}/build-dod/dtd.zip" dest="${ditamapdir}/../published/system/"/-->
+    <tstamp prefix="antfiles-ditamap-start"/>
+    <echo message="build-dod.xml antfiles-ditamap: TIME: ${antfiles-ditamap-start.TSTAMP}"/>
+    <echo message="build-dod.xml antfiles-ditamap: Running antfiles-ditamap.xslt"/>
+    <xslt in="${ditamap}" out="${tempdir}\antfiles-output.xml"
+       extension=".xml" style="${templatedir}\build-dod\antfiles-ditamap.xslt">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../catalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <param name="ditamapbasename" expression="${ditamapbasename}"/>
+      <param name="ditamapdir" expression="${ditamapdir}"/>
+      <param name="draft" expression="${draft}"/>
+      <param name="exportdir" expression="${exportdir}"/>
+      <param name="templatedir" expression="${templatedir}"/>
+      <param name="plugindir" expression="${plugindir}"/>  
+      <param name="tempdir" expression="${tempdir}"/>
+      <param name="outputdir" expression="${outputdir}"/>
+      <param name="ditadir" expression="${ditadir}"/>
+      <param name="stagedir" expression="${stagedir}"/>
+      <param name="languageId" expression="${languageId}"/>
+    </xslt>
+    <!--copy file="${templatedir}/ditaarch.xsd" tofile="${templatedir}/catalog/ditaarch.xsd"
+       overwrite="true"/>
+     <echo message="build-dod.xml antfiles-ditamap: AMCAJ DEBUG copied ditaarch.xsd"/-->
+  </target>
+
+</project>

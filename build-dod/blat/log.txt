@@ -1,0 +1,27 @@
+﻿
+2016.03.08 09:20:41 (Tue)------------Start of Session-----------------
+Blat v3.2.12 (build : Dec  4 2015 19:33:50)
+64-bit Windows, Full, Unicode
+Read 1 TO address from mail_allusers.txt
+Sending all_users.txt to vic.mortelmans@agfa.com
+Subject: Build ready
+Login name is vic.mortelmans@agfa.com
+2016.03.08 09:20:41 (Tue)-------------End of Session------------------
+
+2016.03.08 09:23:32 (Tue)------------Start of Session-----------------
+Blat v3.2.12 (build : Dec  4 2015 19:33:50)
+64-bit Windows, Full, Unicode
+Read 1 TO address from mail_allusers.txt
+Sending all_users.txt to vic.mortelmans@agfa.com
+Subject: Build ready
+Login name is vic.mortelmans@agfa.com
+2016.03.08 09:23:32 (Tue)-------------End of Session------------------
+
+2016.03.08 09:27:49 (Tue)------------Start of Session-----------------
+Blat v3.2.12 (build : Dec  4 2015 19:33:50)
+64-bit Windows, Full, Unicode
+Read 1 TO address from mail_allusers.txt
+Sending stdin.txt to vic.mortelmans@agfa.com
+Subject: Build ready
+Login name is vic.mortelmans@agfa.com
+2016.03.08 09:27:49 (Tue)-------------End of Session------------------
