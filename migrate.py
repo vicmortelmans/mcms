@@ -14,11 +14,11 @@ import urllib.parse
 # (containing 'published', 'localization' and 'authoring' folders), into the current CMS folder.
 #
 # Prerequisite: the 'system' folder, containing IXIASOFT DTD files, must be copied into
-# '<export-folder>/published/system' and '<export-folder>/../system' (/mnt/d/).
+# '<export-dir>/published/system' and '<export-dir>/../system' (/mnt/d/).
 #
 # Run in WSL in the current CMS folder as:
 #
-#   python3 migrate.py <export-folder>
+#   python3 migrate.py <export-dir>
 #
 # All files are copied 1-1, but the names are changed:
 #
@@ -33,28 +33,31 @@ import urllib.parse
 
 
 #MIGRATION_TIMESTAMP = datetime.today().strftime('%Y%m%d%H%M')
+# Using a hardcoded timestamp allows to have subsequent runs of the migration without
+# duplicating files
 MIGRATION_TIMESTAMP = "202301300844"
 
 
-def get_new_ditamap_directory_for_published(first_ditamap):
-  # old: <export-dir>\published\bg-bg\axk1438119883924_00004.ditamap_2
-  # new: .\published\bg-bg\axk1438119883924.ditamap_20180409-1429_MjAxODA0MDkgMTQyOQ==
-  customproperties = first_ditamap.with_suffix('.customproperties')
+def get_new_ditamap_dirname_for_published(master_ditamap):
+  # master_ditamap:
+  # - '<export-dir>/published/en-us/<map-id>.ditamap_<revision>/<map_id>.ditamap'
+  # - '<export-dir>/published/fr-fr/<map-id>_<map_revision>.ditamap_<localization_revision>/<map-id>_<map_revision>.ditamap'
+  # new ditamap dirname: '<map-id>.ditamap_<version(url-encoded)>'
+  customproperties = master_ditamap.with_suffix('.customproperties')
   try:
     cptree = ET.parse(str(customproperties))
   except Exception as e:
     e.args = ("ERROR: file not found: {customproperties}",)
     raise
-  ditamap_directory = first_ditamap.parts[-2]  # 2nd-last element, assuming it's not in authoring or localization!!
-  ditamap_id = ditamap_directory.split('.')[0].split('_')[0]  # substring before _ and .
-  version = cptree.find('version').text
+  version = cptree.find('version').text.strip()
   version_appendix = urllib.parse.quote_plus(version)
+  ditamap_id = master_ditamap.stem.split('_')[0] 
   return f"{ditamap_id}.ditamap_{version_appendix}"
 
 
 def get_new_filename(path):
-  # old: vqg1523273567217_00003.xml
-  # new: vqg1523273567217_202212131553_003.xml
+  # path e.g. "<export-dir>/published/en-us/<map-id>.ditamap_<revision>/<id>.xml"
+  # new filename: "<id>_<MIGRATION_TIMESTAMP>_<authoring_revision>.xml"
   customproperties = path.with_suffix('.customproperties')
   try:
     cptree = ET.parse(str(customproperties))
@@ -69,9 +72,10 @@ def get_new_filename(path):
 # Initialize the progress bar
 total_file_count = 0
 print("Counting files...")
-for suffix in ['xml', 'ditamap', 'image', 'res']:
-  for path in pathlib.Path('.').rglob(f"*.{suffix}"):
-    total_file_count += 1
+for directory in ['authoring', 'localization', 'published']:
+  for suffix in ['xml', 'ditamap', 'image', 'res']:
+    for path in pathlib.Path(sys.argv[1], directory).rglob(f"*.{suffix}"):
+      total_file_count += 1
 print(f"Total number of files: {total_file_count}")
 pbar = tqdm(total=total_file_count)
 
@@ -86,21 +90,21 @@ xslt_proc_map = xslt_proc.compile_stylesheet(stylesheet_file="migrate_dita_map.x
 xslt_proc_topic = xslt_proc.compile_stylesheet(stylesheet_file="migrate_dita_topic.xslt")
 
 def process(files, extra_strings=[]):
-  # Iterate all files 
-  # The list 'files' contains all files in a single map and is used to
-  # search-and-replace references, which are normally only inside a map,
+  # Iterate files, a list of tuples (<old-path>, <old-filename>, <new-path>, <new-filename>) 
+  # 
+  # The list contains all files in a single map and is used to convert files 1-on-1.
+  #
+  # The list is also used to perform a global search-and-replace on
+  # references to the files, which are normally only inside a map,
   # with the exception of supermaps, which refer to published maps, so
   # to search-and-replace these references, a list 'extra-strings' is provided.
-  #
-  # The contents of the XML files is processed in two steps:
-  #
-  #  1. the references to 
 
   for old_path, old_name, new_path, new_name in files:
     new_abs_path = new_path
     pathlib.Path(new_abs_path).mkdir(parents=True, exist_ok=True)
     old_file = '/'.join([old_path, old_name])
     new_file = '/'.join([new_abs_path, new_name])
+    tqdm.write(f"DEBUG: {old_file[-100:]} => {new_file[-100:]}")
     # New file already exists (from previous migration run)
     if pathlib.Path(new_file).exists():
       pass
@@ -165,31 +169,37 @@ def process(files, extra_strings=[]):
 # Process the files in the PUBLISHED folder
 published_ditamaps = []
 for published_directory in pathlib.Path(sys.argv[1], 'published').glob('*/*/'):
-  # e.g. '<export-dir>/published/fr-fr/<map-id>.ditamap_<revision>'
-  if 'system' in published_directory.parts: continue  # ignore system dir (contains dtd files)
-  try:
-    ditamaps = list(pathlib.Path(published_directory).glob('*.ditamap'))
-    first_ditamap = ditamaps[0]
-    if len(ditamaps) > 1:
-      tqdm.write(f"WARNING: more than 1 ditamap in {published_directory.as_posix()}") 
-  except: 
-    tqdm.write(f"ERROR: no ditamap in {published_directory.as_posix()}")
+  # published_directory e.g.
+  # - "<export-dir>/published/en-us/<map-id>.ditamap_<revision>"
+  # - "<export-dir>/published/fr-fr/<map-id>_<map_revision>.ditamap_<localization_revision>"
+  # Ignore system dir (contains dtd files)
+  if 'system' in published_directory.parts: continue  
+  # Find master ditamap
+  master_ditamap_filename = published_directory.with_suffix('.ditamap').name
+  master_ditamap = pathlib.Path(published_directory, master_ditamap_filename)
+  if not master_ditamap.exists():
+    tqdm.write(f"ERROR: no master ditamap; SKIPPING {published_directory.as_posix()}")
     # note: this should not happen on full exports!
     continue
+  # Compose new ditamap dir name
   try:
-    new_ditamap_directory = get_new_ditamap_directory_for_published(first_ditamap)
-  except: continue
+    new_ditamap_dirname = get_new_ditamap_dirname_for_published(master_ditamap)
+  except: 
+    tqdm.write(f"ERROR composing new ditamap dir name; SKIPPING {published_directory.as_posix()}")
+    continue
   # Iterate all files and collect old and new filenames in 'files' 
+  language = published_directory.parts[-2]
   files = []
   for suffix in ['*.xml', '*.ditamap', '*.image', '*.res']:
     for path in pathlib.Path(published_directory).glob(suffix):
+      # path e.g. "<export-dir>/published/en-us/<map-id>.ditamap_<revision>/<id>.xml"
       try:
         new_filename = get_new_filename(path)
       except: continue
       files.append((
-        str(path.parent),  # old path 
-        str(path.name),  # old name 
-        '/'.join([path.parts[0], path.parts[1], new_ditamap_directory]),  # new path
+        str(published_directory),  # old path
+        str(path.name),   # old filename
+        str(pathlib.Path('published', language, new_ditamap_dirname)),  # new path
         new_filename  # new name
       ))
       # collect extra strings that will be applied to supermaps in authoring
@@ -203,15 +213,16 @@ for localization_directory in pathlib.Path(sys.argv[1], 'localization').glob('**
   files = []
   if 'system' in localization_directory.parts: continue
   # Iterate all files and collect old and new filenames in 'files' 
+  language = localization_directory.parts[-1]
   for suffix in ['*.xml', '*.ditamap', '*.image', '*.res']:
     for path in pathlib.Path(localization_directory).glob(suffix):
       try:
         new_filename = get_new_filename(path)
       except: continue
       files.append((
-        str(path.parent),  # old path
+        str(localization_directory),  # old path
         str(path.name),  # old name
-        str(path.parent),  # new path
+        str(pathlib.Path('localization', language)),  # new path
         new_filename  # new name
       ))
   process(files)
@@ -225,7 +236,7 @@ for suffix in ['*.xml', '*.ditamap', '*.image', '*.res']:
     files.append((
       str(path.parent),  # old path
       str(path.name),  # old name
-      str(path.parent),  # new path
+      str(pathlib.Path('authoring')),  # new path
       str(path.name)  # new name
     ))
 process(files, extra_strings=published_ditamaps)

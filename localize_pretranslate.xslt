@@ -49,7 +49,7 @@
       <xsl:otherwise>
         <!-- content has changed; no translation found :-( -->
         <xsl:copy>
-          <xsl:if test="not(@translate)">
+          <xsl:if test="not(@translate) and text()">
             <xsl:attribute name="translate" select="'yes'"/>
           </xsl:if>
           <xsl:apply-templates select="@*|node()"/>
@@ -73,7 +73,7 @@
   <xsl:template match="@path|@serialization" mode="strip-attributes"/>
   <xsl:template match="*" mode="strip-attributes">
     <xsl:copy>
-      <xsl:if test="not(@translate)">
+      <xsl:if test="not(@translate) and text()">
         <xsl:attribute name="translate" select="'no'"/>
       </xsl:if>
       <xsl:apply-templates select="@*|node()" mode="strip-attributes"/>

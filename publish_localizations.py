@@ -2,6 +2,7 @@
 import click
 import pathlib
 import sys
+import stat
 from tqdm import tqdm
 
 # Run in WSL in /mnt/d/mcmsm as:

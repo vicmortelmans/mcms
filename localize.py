@@ -90,6 +90,9 @@ total_file_count = len(published_files) * len(languages)
 print(f"Total number of target files: {total_file_count}")
 pbar = tqdm(total=total_file_count)
 
+# Initialize kit counter
+kit_file_counter = 0
+
 for published_file in published_files:
 
   for language in languages:
@@ -107,7 +110,9 @@ for published_file in published_files:
     # Previous (pre-)translation of this same file is already in localization dir
     # (if there's still a link in kit/<language>, touch it!)
     if localization_file.exists(): 
-      localization_file.touch()
+      if kit_file.exists():
+        kit_file.touch()
+        kit_file_counter += 1
       tqdm.write(f"File already translated (or in translation): {localization_file}")
       continue
 
@@ -152,7 +157,9 @@ for published_file in published_files:
     
     # Create link in kit/<language> dir, collecting files for translators
     localization_file.link_to(kit_file)
+    kit_file_counter += 1
 
+tqdm.write(f"Total number of files in kit: {kit_file_counter}")
 pbar.close()
 
 #import pdb; pdb.set_trace()
