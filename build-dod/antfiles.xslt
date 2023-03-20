@@ -265,6 +265,7 @@
             <output href="file:/{$build-stagedir-d}/pdf" xmlns="https://www.dita-ot.org/project"/>
             <publication transtype="pdfradsol" xmlns="https://www.dita-ot.org/project">
               <param name="clean.temp" value="no" xmlns="https://www.dita-ot.org/project"/><!-- for DEBUGGING -->
+              <param name="dita.temp.dir" value="{$build-tempdir-d}" xmlns="https://www.dita-ot.org/project"/>
               <param name="outputFile.base" value="{$file}" xmlns="https://www.dita-ot.org/project"/>
               <param name="include.rellinks" value="parent child friend cousin ancestor descendant sample external other" xmlns="https://www.dita-ot.org/project"/>
               <xsl:choose>
@@ -489,6 +490,7 @@
           <output href="file:/{$build-stagedir-d}" xmlns="https://www.dita-ot.org/project"/>
           <publication transtype="html5" xmlns="https://www.dita-ot.org/project">
             <param name="clean.temp" value="no" xmlns="https://www.dita-ot.org/project"/><!-- for DEBUGGING -->
+            <param name="dita.temp.dir" value="{$build-tempdir-d}" xmlns="https://www.dita-ot.org/project"/>
             <param name="buildParameterLanguage" value="{$lang}" xmlns="https://www.dita-ot.org/project"/>
             <param name="buildParameterDate" value="{$build-date}" xmlns="https://www.dita-ot.org/project"/>
             <param name="buildParameterDitamap" value="file:/{$exportdir}/{$ditamapbasename}" xmlns="https://www.dita-ot.org/project"/>

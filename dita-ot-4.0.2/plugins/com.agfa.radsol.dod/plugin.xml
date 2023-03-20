@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="dita-ot/plugin.rnc" type="application/relax-ng-compact-syntax"?>
+
+<plugin id="com.agfa.radsol.dod">
+
+  <require plugin="org.dita.pdf2"/>
+  <require plugin="org.dita.pdf2.fop"/>
+  <require plugin="org.dita.html5"/>
+
+  <!-- use catalog file for XML parsing -->
+  <feature extension="dita.specialization.catalog.relative" file="catalog.xml"/>
+
+  <!-- COMMON TO PDF AND HTML5 -->  
+
+  <!-- import ant targets "reviseddate.target" and "metadata.target" -->
+  <feature extension="ant.import" file="build-preprocess.xml"/>
+
+  <!-- import ant target "copyArtwork" -->
+  <feature extension="ant.import" file="build-template.xml"/>
+
+  <!-- run ant target "reviseddate.target" during common preprocess -->
+  <feature extension="depend.preprocess.post" value="reviseddate.target"/>
+
+  <!-- run ant target "metadata.target" during common preprocess -->
+  <feature extension="depend.preprocess.post" value="metadata.target"/>
+
+  <!-- add generated text, a.o. headers and footers -->
+  <feature extension="dita.xsl.strings" file="xsl/strings.xml"/>
+
+  <!-- PDF -->
+    
+  <!-- customizations via catalog -->
+  <transtype name="pdfradsol" extends="pdf"/>
+  <feature extension="dita.transtype.print" value="pdfradsol"/>
+  <feature extension="ant.import" file="integrator.xml"/>
+    <!-- integrator.xml sets properties "customization.dir" and "args.fo.userconfig" -->
+
+  <!-- run ant target "copyArtwork" during PDF preprocess -->
+  <feature extension="depend.org.dita.pdf2.format.pre" value="copyArtwork"/>
+
+  <!-- add custom parameters to XSLT for PDF build -->
+  <feature extension="dita.conductor.pdf2.param" file="buildParameters.xml"/>
+
+  <!-- overrule attribute sets "__frontmatter__title" and add "__frontmatter__typenumber" -->
+  <feature extension="dita.xsl.xslfo" file="cfg/fo/attrs/front-matter-attr.xsl"/> 
+
+  <!-- overrule attribute set "__fo__root" to activate hyphenation -->
+  <feature extension="dita.xsl.xslfo" file="cfg/fo/attrs/commons-attr.xsl"/> 
+
+  <!-- overrule template "create-page-masters" -->
+  <feature extension="dita.xsl.xslfo" file="cfg/fo/layout-masters.xsl"/>  
+
+  <!-- overrule template "createFrontCoverContents" -->
+  <feature extension="dita.xsl.xslfo" file="xsl/fo/front-matter.xsl"/>
+
+  <!-- overrule variable "productName" -->
+  <feature extension="dita.xsl.xslfo" file="xsl/fo/root-processing.xsl"/>
+
+  <!-- overrule template "insert*Header, insert*Footer" -->
+  <feature extension="dita.xsl.xslfo" file="xsl/fo/static-content.xsl"/>
+
+  <!-- overrule template "topic/table and topic/colspec" for auto table layout -->
+  <feature extension="dita.xsl.xslfo" file="xsl/fo/tables_fop.xsl"/>
+
+  <!-- overrule template "setNoteImagePath, placeNoteContent" (for admonitions),
+       and "processTopicTitle" (for page breaks) -->
+  <feature extension="dita.xsl.xslfo" file="xsl/fo/topic.xsl"/>
+
+  <!-- overrule template "ul-child-links, ol-child-links" to control minitocs -->
+  <!-- overrule template "topic/link" to group related topics in a single list -->
+  <!-- overrule template "topic/related-links" to fix empty fo-blocks -->
+  <feature extension="dita.xsl.xslfo" file="xsl/fo/links.xsl"/>
+
+  <!-- add new template "topic/fig > topic/ol > topic/li" -->
+  <feature extension="dita.xsl.xslfo" file="xsl/fo/figlists.xsl"/>
+  <feature extension="dita.xsl.xslfo" file="cfg/fo/attrs/figlists-attr.xsl"/> 
+
+  <!-- add fop hyphenation library to classpath -->
+  <feature extension="dita.conductor.lib.import" file="fop-hyph.jar"/>
+
+  <!-- HTML5 -->
+
+  <!-- add custom parameters to XSLT for HTML5 TOC build -->
+  <feature extension="dita.conductor.html5.toc.param" file="buildParameters.xml"/>
+
+  <!-- overrule template "gen-user-header, gen-user-footer" -->
+  <feature extension="dita.xsl.html5.cover" file="xsl/cover.xsl"/>  
+
+  <!-- add custom parameters to XSLT for HTML5 build -->
+  <feature extension="dita.conductor.html5.param" file="buildParameters.xml"/>
+
+  <!-- overrule template "gen-user-header, gen-user-footer, process.note.other, process.note"; 
+       add template to replace illegal HTML characters (seen in some xml sources!) by spaces -->
+  <feature extension="dita.xsl.html5" file="xsl/topic.xsl"/>  
+
+</plugin>

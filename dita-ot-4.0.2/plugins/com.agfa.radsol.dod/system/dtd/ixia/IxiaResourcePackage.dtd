@@ -1,0 +1,132 @@
+<!-- ============================================================= -->
+<!--                    HEADER                                     -->
+<!-- ============================================================= -->
+<!--  MODULE:    IXIA DITA Resource Package DTD                    -->
+<!--  VERSION:   1.1                                               -->
+<!--  DATE:      November 2008                                     -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                    TYPICAL INVOCATION                         -->
+<!--                                                               -->
+<!--  Refer to this file by the following public identifier or an 
+      appropriate system identifier 
+PUBLIC "-//IXIA//DTD IXIA DITA Resource Package//EN"
+      Delivered as file "IxiaResourcePackage.dtd"                  -->
+
+<!-- ============================================================= -->
+<!-- SYSTEM:     Darwin Information Typing Architecture (DITA)     -->
+<!--                                                               -->
+<!-- PURPOSE:    DTD to describe IXIASOFT DITA CMS                 -->
+<!--             Resource Package                                  -->
+<!--                                                               -->
+<!-- ORIGINAL CREATION DATE:                                       -->
+<!--             March 2004                                        -->
+<!--                                                               -->
+<!--             (C) Copyright OASIS Open 2006.                    -->
+<!--             (C) Copyright IBM Corporation 2004, 2005.         -->
+<!--             All Rights Reserved.                              -->
+<!--                                                               -->
+<!--  UPDATES:                                                     -->
+<!-- ============================================================= -->
+
+
+<!-- ============================================================= -->
+<!--                    CONSTANTS ENTITY DECLARATIONS              -->
+<!-- ============================================================= -->
+
+
+<!-- ============================================================= -->
+<!--                    DOMAIN ENTITY DECLARATIONS                 -->
+<!-- ============================================================= -->
+
+
+<!ENTITY % ixiavariables 
+                        PUBLIC 
+"-//IXIA//MODULE DITA Variables//EN" 
+"ixiavariables.mod"                                                  >
+%ixiavariables;
+
+<!ENTITY % ixiaconstants
+                        PUBLIC 
+"-//IXIA//ENTITIES DITA Constants//EN" 
+"IxiaConstants.ent"                                                  >
+%ixiaconstants;
+
+<!ENTITY % mapgroup-d-dec 
+                        PUBLIC 
+"-//OASIS//ENTITIES DITA Map Group Domain//EN" 
+"../base/dtd/mapGroup.ent"                                           >
+%mapgroup-d-dec;
+
+
+<!-- ============================================================= -->
+<!--                    DOMAIN ATTRIBUTE DECLARATIONS              -->
+<!-- ============================================================= -->
+
+
+<!ENTITY % localization-loc-d-dec PUBLIC 
+"-//IXIA//ENTITIES DITA Localization Domain//EN" 
+"localizationDomain.ent"                                             >
+%localization-loc-d-dec;
+
+
+<!-- ============================================================= -->
+<!--                    DOMAIN EXTENSIONS                          -->
+<!-- ============================================================= -->
+<!--                    One for each extended base element, with
+                        the name of the domain(s) in which the
+                        extension was declared                     -->
+
+
+<!-- ============================================================= -->
+<!--                    DOMAIN ATTRIBUTE EXTENSIONS                -->
+<!-- ============================================================= -->
+
+
+<!ENTITY % props-attribute-extensions  ""                            >
+<!ENTITY % base-attribute-extensions 
+           "%localization-loc-d-attribute;"                          >
+
+
+<!-- ============================================================= -->
+<!--                    DOMAINS ATTRIBUTE OVERRIDE                 -->
+<!-- ============================================================= -->
+<!--                    Must be declared ahead of the DTDs, which
+                        puts @domains first in order               -->
+
+
+<!ENTITY included-domains "&mapgroup-d-att; &localization-loc-d-att;">
+
+
+<!-- ============================================================= -->
+<!--                    MAP ELEMENT INTEGRATION                    -->
+<!-- ============================================================= -->
+
+
+<!ENTITY % map-type PUBLIC 
+"-//OASIS//ELEMENTS DITA Map//EN" 
+"../base/dtd/map.mod"                                                >
+%map-type;
+
+<!ENTITY % resourcepkg-type     PUBLIC 
+"-//IXIA//ELEMENTS IXIA DITA Resource Package//EN" 
+"IxiaResourcePackage.mod"                                            >
+%resourcepkg-type;
+
+
+<!-- ============================================================= -->
+<!--                    DOMAIN ELEMENT INTEGRATION                 -->
+<!-- ============================================================= -->
+
+
+<!ENTITY % mapgroup-d-def  
+                        PUBLIC 
+"-//OASIS//ELEMENTS DITA Map Group Domain//EN" 
+"../base/dtd/mapGroup.mod"                                           >
+%mapgroup-d-def;
+
+
+<!-- ================== End IXIA DITA Resource Package DTD  ====== -->

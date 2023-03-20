@@ -1,0 +1,92 @@
+<!-- ################################## -->
+<!-- Search document query definition-->
+<!ELEMENT query  ((key | property | andkey | orkey | andnotkey | include), sort?, date_query?) >
+<!ATTLIST query VERSION     CDATA #REQUIRED
+                RESULTSPACE CDATA #REQUIRED>
+
+<!-- ################################## -->
+<!-- Keys and properties -->
+<!ELEMENT andkey    ((key | property | andkey | orkey | andnotkey | include), (key | property | andkey | orkey | andnotkey | include)+) >
+<!ELEMENT orkey     ((key | property | andkey | orkey | andnotkey | include), (key | property | andkey | orkey | andnotkey | include)+) >
+<!ELEMENT andnotkey ((key | property | andkey | orkey | andnotkey | include), (key | property | andkey | orkey | andnotkey | include)) >
+<!ELEMENT property (elem | interval | date | number | time | and | or | andnot | unit | adj | near | frq) >
+<!ATTLIST property NAME CDATA #REQUIRED>
+<!ELEMENT key    (elem | interval | date | number | time | and | or | andnot | unit | adj | near | frq) >
+<!ATTLIST key NAME CDATA #REQUIRED>
+
+<!-- ################################## -->
+<!-- Logical operators -->
+<!ELEMENT and    ((elem | interval | date | number | time | and | or | andnot | unit | adj | near | frq), (elem | interval | date | number | time | and | or | andnot | unit | adj | near | frq)+) >
+<!ELEMENT or     ((elem | interval | date | number | time | and | or | andnot | unit | adj | near | frq), (elem | interval | date | number | time | and | or | andnot | unit | adj | near | frq)+) >
+<!ELEMENT andnot ((elem | interval | date | number | time | and | or | andnot | unit | adj | near | frq), (elem | interval | date | number | time | and | or | andnot | unit | adj | near | frq)) >
+<!ELEMENT unit   ((elem | and | or | andnot | unit | adj | near | frq)+) >
+<!ATTLIST unit NAME CDATA #REQUIRED>
+<!ELEMENT adj    ((elem | and | or | andnot | unit | adj | near | frq), (elem | and | or | andnot | unit | adj | near | frq)) >
+<!ATTLIST adj VALUE CDATA #REQUIRED>
+<!ELEMENT near   ((elem | and | or | andnot | unit | adj | near | frq), (elem | and | or | andnot | unit | adj | near | frq)) >
+<!ATTLIST near VALUE CDATA #REQUIRED>
+<!ELEMENT frq    (elem | and | or | andnot | unit | adj | near | frq) >
+<!ATTLIST frq VALUE CDATA #REQUIRED>
+
+<!-- ################################## -->
+<!-- Criteria definition -->
+<!ELEMENT interval (start?, end?) >
+<!ELEMENT start    (date | number | time) >
+<!ATTLIST start    INCLUSIVE (True | False) "True">
+<!ELEMENT end      (date | number | time) >
+<!ATTLIST end      INCLUSIVE (True | False) "True">
+<!ELEMENT date  ((year, (month, day?)?)) >
+<!ELEMENT year  (#PCDATA) >
+<!ELEMENT month (#PCDATA) >
+<!ELEMENT day   (#PCDATA) >
+<!ELEMENT number   (#PCDATA) >
+<!ELEMENT time     (#PCDATA) >
+<!ELEMENT elem   (#PCDATA | anychr | anystr | oneof)* >
+<!ELEMENT anychr EMPTY >
+<!ELEMENT anystr EMPTY >
+<!ELEMENT oneof  (choice+) >
+<!ELEMENT choice (#PCDATA) >
+<!ELEMENT include (#PCDATA) >
+<!ATTLIST include TYPE (ResultSpace | Query ) #REQUIRED>
+
+<!-- ################################## -->
+<!-- Sort criteria definition -->
+<!ELEMENT sort (criteria)+ >
+<!ELEMENT criteria EMPTY >
+<!ATTLIST criteria NAME CDATA #IMPLIED
+                   TYPE   (Index | Hits | Property) "Index"
+                   ALPHAORDER   (True | False) "False"
+                   REVERSEORDER (True | False) "False"
+                   NOVALUEFIRST (True | False) "False">
+
+<!-- ################################## -->
+<!-- Date query extension -->
+<!ELEMENT date_query (date_macro*) >
+<!ATTLIST date_query indexName CDATA #REQUIRED >
+<!ATTLIST date_query operator (and|or|without) #REQUIRED >
+<!ATTLIST date_query range (none|onDate|beforeDate|afterDate|dateRange) #REQUIRED >
+ 
+ <!ELEMENT date_macro (offset,(fixed_date|day_of_week_date|day_of_month_date|weekday_of_month_date|day_offset_date)) >
+ <!ATTLIST date_macro bounds (inclusive|exclusive) #REQUIRED >
+ <!ATTLIST date_macro name CDATA #REQUIRED >
+ 
+ <!ELEMENT offset EMPTY>
+ <!ATTLIST offset direction (before|after) #REQUIRED >
+ <!ATTLIST offset period (day|week|month|year) #REQUIRED >
+ <!ATTLIST offset value CDATA #REQUIRED >
+ 
+ <!ELEMENT fixed_date EMPTY >
+ <!ATTLIST fixed_date date CDATA #REQUIRED >
+ 
+ <!ELEMENT day_offset_date EMPTY >
+ <!ATTLIST day_offset_date offset CDATA #REQUIRED >
+ 
+ <!ELEMENT day_of_week_date EMPTY >
+ <!ATTLIST day_of_week_date day (sunday|monday|tuesday|wednesday|thursday|friday|saturday) #REQUIRED >
+ 
+ <!ELEMENT day_of_month_date EMPTY >
+ <!ATTLIST day_of_month_date dayOfMonth CDATA #REQUIRED >
+ 
+ <!ELEMENT weekday_of_month_date EMPTY >
+ <!ATTLIST weekday_of_month_date day (sunday|monday|tuesday|wednesday|thursday|friday|saturday) #REQUIRED >
+ <!ATTLIST weekday_of_month_date nth CDATA #REQUIRED >

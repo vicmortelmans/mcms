@@ -1,20 +1,13 @@
 #!/usr/bin/python3
-import base64
-from datetime import datetime
-import xml.etree.ElementTree as ET
-import pathlib
-from slugify import slugify
-import subprocess
-import sys
-from tqdm import tqdm
-from saxonche import PySaxonProcessor
-import urllib.parse
 
 # This script migrates the exported IXIASOFT CMS files from an export folder
 # (containing 'published', 'localization' and 'authoring' folders), into the current CMS folder.
 #
 # Prerequisite: the 'system' folder, containing IXIASOFT DTD files, must be copied into
-# '<export-dir>/published/system' and '<export-dir>/../system' (/mnt/d/).
+# '<export-dir>/published/system' and '<export-dir>/../system'.
+#
+# When using the export that is made for Output Generation, start from the zip-file, because
+# the extracted files are pre-processed! (e.g. .image renamed to .svg)
 #
 # Run in WSL in the current CMS folder as:
 #
@@ -31,6 +24,19 @@ import urllib.parse
 # The authoring revision will be added as well.
 # When in operation, the CMSM will use the authoring timestamp (file attribute) instead
 
+# Set OVERWRITE flag True to redo migration for files that are already migrated
+OVERWRITE = True
+
+import base64
+from datetime import datetime
+import xml.etree.ElementTree as ET
+import pathlib
+from slugify import slugify
+import subprocess
+import sys
+from tqdm import tqdm
+from saxonche import PySaxonProcessor
+import urllib.parse
 
 #MIGRATION_TIMESTAMP = datetime.today().strftime('%Y%m%d%H%M')
 # Using a hardcoded timestamp allows to have subsequent runs of the migration without
@@ -50,7 +56,7 @@ def get_new_ditamap_dirname_for_published(master_ditamap):
     e.args = ("ERROR: file not found: {customproperties}",)
     raise
   version = cptree.find('version').text.strip()
-  version_appendix = urllib.parse.quote_plus(version)
+  version_appendix = urllib.parse.quote_plus(version).replace('%','~')
   ditamap_id = master_ditamap.stem.split('_')[0] 
   return f"{ditamap_id}.ditamap_{version_appendix}"
 
@@ -104,21 +110,24 @@ def process(files, extra_strings=[]):
     pathlib.Path(new_abs_path).mkdir(parents=True, exist_ok=True)
     old_file = '/'.join([old_path, old_name])
     new_file = '/'.join([new_abs_path, new_name])
-    tqdm.write(f"DEBUG: {old_file[-100:]} => {new_file[-100:]}")
+
     # New file already exists (from previous migration run)
-    if pathlib.Path(new_file).exists():
+    if pathlib.Path(new_file).exists() and not OVERWRITE:
       pass
+
     # Images: copy file and filename is changed from .image to .svg
     elif pathlib.Path(old_name).suffix == '.image':
       new_file = pathlib.Path(new_file).with_suffix('.svg')
       with open(old_file, 'rb') as old, open(new_file, 'wb') as new:
         new.write(old.read())
+
     # Resources: copy file and filename is changed from .res to .zip 
     # (otherwise oXygen Author won't recognize it as a zip)
     elif pathlib.Path(old_name).suffix == '.res':
       new_file = pathlib.Path(new_file).with_suffix('.zip')
       with open(old_file, 'rb') as old, open(new_file, 'wb') as new:
         new.write(old.read())
+
     # DITA maps
     elif pathlib.Path(old_name).suffix == '.ditamap':
       tmp_file = old_file + "_buffer.tmp"
@@ -131,16 +140,15 @@ def process(files, extra_strings=[]):
             new_line = new_line.replace(old_string, new_string)
           # find and replace full paths in supermaps
           # (extra_strings are collected in published and applied in authoring)
-          for old_string1, old_string2, new_string1, new_string2 in extra_strings:
-            new_line = new_line.replace(
-              '/'.join([old_string1, old_string2]),
-              '/'.join([new_string1, new_string2])
-            )
+          for old_string, new_string in extra_strings:
+            new_line = new_line.replace(old_string, new_string)
+            tqdm.write(f"DEBUG: s&r {str(old_string)[-100:]} => {str(new_string)[-100:]}")
           tmp.write(new_line)
       # 2. remove @ixia_locid and rename references to resources from .res to .zip
       # (this needs the system folder with DTD specs in place!)
       xslt_proc_map.transform_to_file(source_file=tmp_file, output_file=new_file)
       pathlib.Path(tmp_file).unlink()
+
     # topic files
     else:
       tmp_file = old_file + "_buffer.tmp"
@@ -157,6 +165,7 @@ def process(files, extra_strings=[]):
       # (this needs the system folder with DTD specs in place!)
       xslt_proc_topic.transform_to_file(source_file=tmp_file, output_file=new_file)
       pathlib.Path(tmp_file).unlink()
+    tqdm.write(f"DEBUG: mig {str(old_file)[-100:]} => {str(new_file)[-100:]}")
     pbar.update(1)
 
   tqdm.write(f"DONE: {len(files)} files in {directory}")
@@ -169,11 +178,14 @@ def process(files, extra_strings=[]):
 # Process the files in the PUBLISHED folder
 published_ditamaps = []
 for published_directory in pathlib.Path(sys.argv[1], 'published').glob('*/*/'):
+
   # published_directory e.g.
   # - "<export-dir>/published/en-us/<map-id>.ditamap_<revision>"
   # - "<export-dir>/published/fr-fr/<map-id>_<map_revision>.ditamap_<localization_revision>"
+
   # Ignore system dir (contains dtd files)
   if 'system' in published_directory.parts: continue  
+
   # Find master ditamap
   master_ditamap_filename = published_directory.with_suffix('.ditamap').name
   master_ditamap = pathlib.Path(published_directory, master_ditamap_filename)
@@ -181,21 +193,26 @@ for published_directory in pathlib.Path(sys.argv[1], 'published').glob('*/*/'):
     tqdm.write(f"ERROR: no master ditamap; SKIPPING {published_directory.as_posix()}")
     # note: this should not happen on full exports!
     continue
+
   # Compose new ditamap dir name
   try:
     new_ditamap_dirname = get_new_ditamap_dirname_for_published(master_ditamap)
   except: 
     tqdm.write(f"ERROR composing new ditamap dir name; SKIPPING {published_directory.as_posix()}")
     continue
+
   # Iterate all files and collect old and new filenames in 'files' 
   language = published_directory.parts[-2]
   files = []
+
   for suffix in ['*.xml', '*.ditamap', '*.image', '*.res']:
     for path in pathlib.Path(published_directory).glob(suffix):
       # path e.g. "<export-dir>/published/en-us/<map-id>.ditamap_<revision>/<id>.xml"
       try:
         new_filename = get_new_filename(path)
-      except: continue
+      except: 
+        tqdm.write(f"ERROR composing new filename; SKIPPING {path.as_posix()}")
+        continue
       files.append((
         str(published_directory),  # old path
         str(path.name),   # old filename
@@ -204,16 +221,30 @@ for published_directory in pathlib.Path(sys.argv[1], 'published').glob('*/*/'):
       ))
       # collect extra strings that will be applied to supermaps in authoring
       if path.suffix == '.ditamap':
-        published_ditamaps.append(files[-1])
+        old_string = str(pathlib.Path(published_directory.name, path.name))
+        new_string = str(pathlib.Path(new_ditamap_dirname, new_filename))
+        ''' OBSOLETE: urlencode is hidden by replacing % by ~
+        new_string = str(pathlib.Path(urllib.parse.quote_plus(new_ditamap_dirname), new_filename))
+        # the new_ditamap_dirname may contain URI-encoded characters;
+        # these must be DOUBLE encoded when used has href in a ditamap file,
+        # because oXygen Author and Saxon XSLT will DECODE the href first,
+        # before going to the filesystem.
+        '''
+        published_ditamaps.append((old_string, new_string))
+
   process(files)
 
 
 # Process the files in the LOCALIZATION folder
 for localization_directory in pathlib.Path(sys.argv[1], 'localization').glob('**/'):
-  files = []
+
+  # Ignore system dir (contains dtd files)
   if 'system' in localization_directory.parts: continue
+
   # Iterate all files and collect old and new filenames in 'files' 
   language = localization_directory.parts[-1]
+  files = []
+
   for suffix in ['*.xml', '*.ditamap', '*.image', '*.res']:
     for path in pathlib.Path(localization_directory).glob(suffix):
       try:
@@ -225,11 +256,13 @@ for localization_directory in pathlib.Path(sys.argv[1], 'localization').glob('**
         str(pathlib.Path('localization', language)),  # new path
         new_filename  # new name
       ))
+
   process(files)
 
 
 # Process the files in the AUTHORING folder
 files = []
+
 # Iterate all files and collect old and new filenames in 'files' 
 for suffix in ['*.xml', '*.ditamap', '*.image', '*.res']:
   for path in pathlib.Path(sys.argv[1], 'authoring').glob(suffix):
@@ -239,6 +272,7 @@ for suffix in ['*.xml', '*.ditamap', '*.image', '*.res']:
       str(pathlib.Path('authoring')),  # new path
       str(path.name)  # new name
     ))
+
 process(files, extra_strings=published_ditamaps)
 
 

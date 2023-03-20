@@ -1,0 +1,29 @@
+<!-- ============================================================= -->
+<!--                    HEADER                                     -->
+<!-- ============================================================= -->
+<!--  MODULE:    IXIA Constant Entities                            -->
+<!--  VERSION:   1.0                                               -->
+<!--  DATE:      Mai 2006                                          -->
+<!--                                                               -->
+<!-- ============================================================= -->
+
+<!-- ============================================================= -->
+<!--                    PUBLIC DOCUMENT TYPE DEFINITION            -->
+<!--                    TYPICAL INVOCATION                         -->
+<!--                                                               -->
+<!--  Refer to this file by the following public identfier or an 
+      appropriate system identifier 
+PUBLIC "-//IXIA//ENTITIES DITA Constants//EN"
+      Delivered as file "IxiaConstants.ent"                        -->
+<!-- ============================================================= -->
+
+
+<!-- ============================================================= -->
+<!--                    ENTITIES DECLARATIONS                      -->
+<!-- ============================================================= -->
+
+<!--
+<!ENTITY   entity_name  "entity_value"                               >
+-->
+
+<!-- ================== End Constant Entities ==================== -->

@@ -31,7 +31,7 @@ import urllib.parse
 # the filenames of topicrefs, images and conrefs.
 
 version = datetime.today().strftime('%Y%m%d %H%M')
-version_appendix = urllib.parse.quote_plus(version)
+version_appendix = urllib.parse.quote_plus(version).replace('%','~')
 
 # Initialize the XSLT processor
 saxon_proc = PySaxonProcessor(license=False)
