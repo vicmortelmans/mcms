@@ -16,7 +16,8 @@
 # All files are copied 1-1, but the names are changed:
 #
 #  - published folders are renamed to <map_id>.ditamap_<version>
-#    where <version> is the uri-encoded version string (with space -> '+')
+#    where <version> is the uri-encoded version string, with space -> '+',
+#    and the encoding hidden for XSLT's doc() function by replacing '%' by '~'
 #  - published and localization files are renamed to 
 #    <id>_<migration_timestamp>_<authoring_revision>
 #
