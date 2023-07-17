@@ -42,7 +42,7 @@ import urllib.parse
 #MIGRATION_TIMESTAMP = datetime.today().strftime('%Y%m%d%H%M')
 # Using a hardcoded timestamp allows to have subsequent runs of the migration without
 # duplicating files
-MIGRATION_TIMESTAMP = "202301300844"
+MIGRATION_TIMESTAMP = "202307141139"
 
 
 def get_new_ditamap_dirname_for_published(master_ditamap):
@@ -177,6 +177,9 @@ def process(files, extra_strings=[]):
 ##########
 
 # Process the files in the PUBLISHED folder
+# Files here are
+# - maps and dependent topics, localized and published and linked from a Supermap
+# - topics or images without maps, linked from a branched authoring map
 published_ditamaps = []
 for published_directory in pathlib.Path(sys.argv[1], 'published').glob('*/*/'):
 
@@ -191,22 +194,21 @@ for published_directory in pathlib.Path(sys.argv[1], 'published').glob('*/*/'):
   master_ditamap_filename = published_directory.with_suffix('.ditamap').name
   master_ditamap = pathlib.Path(published_directory, master_ditamap_filename)
   if not master_ditamap.exists():
-    tqdm.write(f"ERROR: no master ditamap; SKIPPING {published_directory.as_posix()}")
-    # note: this should not happen on full exports!
+    tqdm.write(f"ERROR finding master ditamap; {published_directory.as_posix()} contains topics for branched ditamaps; not supported for migration")
     continue
-
-  # Compose new ditamap dir name
-  try:
-    new_ditamap_dirname = get_new_ditamap_dirname_for_published(master_ditamap)
-  except: 
-    tqdm.write(f"ERROR composing new ditamap dir name; SKIPPING {published_directory.as_posix()}")
-    continue
+  else:
+    # Compose new ditamap dir name
+    try:
+      new_ditamap_dirname = get_new_ditamap_dirname_for_published(master_ditamap)
+    except: 
+      tqdm.write(f"ERROR composing new ditamap dir name; SKIPPING {published_directory.as_posix()}")
+      continue
 
   # Iterate all files and collect old and new filenames in 'files' 
   language = published_directory.parts[-2]
   files = []
 
-  for suffix in ['*.xml', '*.ditamap', '*.image', '*.res']:
+  for suffix in ['*.xml', '*.ditamap', '*.image']:
     for path in pathlib.Path(published_directory).glob(suffix):
       # path e.g. "<export-dir>/published/en-us/<map-id>.ditamap_<revision>/<id>.xml"
       try:
@@ -220,8 +222,8 @@ for published_directory in pathlib.Path(sys.argv[1], 'published').glob('*/*/'):
         str(pathlib.Path('published', language, new_ditamap_dirname)),  # new path
         new_filename  # new name
       ))
-      # collect extra strings that will be applied to supermaps in authoring
-      if path.suffix == '.ditamap':
+      # collect extra strings that will be applied to (super)maps in authoring
+      if suffix == '.ditamap':
         old_string = str(pathlib.Path(published_directory.name, path.name))
         new_string = str(pathlib.Path(new_ditamap_dirname, new_filename))
         ''' OBSOLETE: urlencode is hidden by replacing % by ~
