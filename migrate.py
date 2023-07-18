@@ -148,7 +148,7 @@ def process(files, extra_strings=[]):
       # 2. remove @ixia_locid and rename references to resources from .res to .zip
       # (this needs the system folder with DTD specs in place!)
       xslt_proc_map.transform_to_file(source_file=tmp_file, output_file=new_file)
-      pathlib.Path(tmp_file).unlink()
+      #pathlib.Path(tmp_file).unlink()
 
     # topic files
     else:
@@ -168,8 +168,6 @@ def process(files, extra_strings=[]):
       pathlib.Path(tmp_file).unlink()
     tqdm.write(f"DEBUG: mig {str(old_file)[-100:]} => {str(new_file)[-100:]}")
     pbar.update(1)
-
-  tqdm.write(f"DONE: {len(files)} files in {directory}")
 
 
 ##########
@@ -223,7 +221,7 @@ for published_directory in pathlib.Path(sys.argv[1], 'published').glob('*/*/'):
         new_filename  # new name
       ))
       # collect extra strings that will be applied to (super)maps in authoring
-      if suffix == '.ditamap':
+      if suffix == '*.ditamap':
         old_string = str(pathlib.Path(published_directory.name, path.name))
         new_string = str(pathlib.Path(new_ditamap_dirname, new_filename))
         ''' OBSOLETE: urlencode is hidden by replacing % by ~
@@ -234,8 +232,10 @@ for published_directory in pathlib.Path(sys.argv[1], 'published').glob('*/*/'):
         # before going to the filesystem.
         '''
         published_ditamaps.append((old_string, new_string))
+        tqdm.write(f"DEBUG: storing for s&r {str(old_string)[-100:]} => {str(new_string)[-100:]}")
 
   process(files)
+  tqdm.write(f"DONE: {len(files)} files in {published_directory.as_posix()}")
 
 
 # Process the files in the LOCALIZATION folder
@@ -261,6 +261,7 @@ for localization_directory in pathlib.Path(sys.argv[1], 'localization').glob('**
       ))
 
   process(files)
+  tqdm.write(f"DONE: {len(files)} files in {localization_directory.as_posix()}")
 
 
 # Process the files in the AUTHORING folder
@@ -277,6 +278,7 @@ for suffix in ['*.xml', '*.ditamap', '*.image', '*.res']:
     ))
 
 process(files, extra_strings=published_ditamaps)
+tqdm.write(f"DONE: {len(files)} files in authoring")
 
 
 pbar.close()
