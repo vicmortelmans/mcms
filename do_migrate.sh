@@ -2,7 +2,7 @@
 
 # Usage:
 #
-#   ./do_migrate
+#   ./do_migrate 2>&1 | tee "`date`.log"
  
 # IXIASOFT export zip files are found in 'todo' subdirectory here:
 export="/mnt/h/amcaj/0_Documentation/cms-exports"
@@ -24,6 +24,7 @@ for f in $export/todo/*.zip; do
   echo "Migrating"
   date
   python3 migrate.py "$temp/$n.dir"
+  touch "$f"
   mv -v "$f" "$export/done/"
   echo "Cleaning up $temp/$n.dir"
   rm -Rf "$temp/$n.dir"
