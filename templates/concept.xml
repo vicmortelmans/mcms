@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/"
+         id="TOPIC_ID"
+         xml:lang="en-us"
+         ditaarch:DITAArchVersion="1.2"
+         domains="(topic concept) (topic concept glossentry) (topic concept glossgroup) (topic reference) (topic task) (topic hi-d) (topic ut-d) (topic indexing-d) (topic hazard-d) (topic abbrev-d) (topic pr-d) (topic sw-d) (topic ui-d) (topic task strictTaskbody-c)"
+          class="- topic/topic concept/concept ">
+   <title class="- topic/title "></title>
+   <conbody class="- topic/body  concept/conbody ">
+   </conbody>
+</concept>

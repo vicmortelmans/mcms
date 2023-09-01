@@ -7,7 +7,7 @@ from tqdm import tqdm
 from saxonche import PySaxonProcessor
 import urllib.parse
 
-# Run in WSL in /mnt/d/mcmsm as:
+# Run in WSL in /mnt/c/mcmsm as:
 #
 #   python3 publish.py authoring/<map_id>.ditamap
 #
@@ -21,10 +21,8 @@ import urllib.parse
 #   <id>_<authoring_timestamp>.*
 #
 # Where:
-#  - <version> is a "YYYYMMDD HHMM" timestamp, time of running this script, with the
-#    base64 encoding of it appended (note: seems superfluous, but at some point this
-#    script may be expanded to allow custom <version> strings, which cannot be safely
-#    encoded in a filename!)
+#  - <version> is a "YYYYMMDD+HHMM" timestamp, time of running this script, 
+#    uri-encoded, with '+' as space 
 #  - <authoring_timestamp> is a "YYYYMMDDHHMM" timestamp, timestamp of the original file
 #
 # In the ditamap file(s) and xml files, a search-and-replace is performed to modify
@@ -102,7 +100,7 @@ for old_path, old_name, new_path, new_name in files:
           new_line = new_line.replace(old_string, new_string)
         new.write(new_line)
   # make new file read only
-  new_file.chmod(stat.S_IREAD)
+  pathlib.Path(new_file).chmod(stat.S_IREAD)
   pbar.update(1)
 
 tqdm.write(f"DONE: {len(files)} children of {sys.argv[1]}")

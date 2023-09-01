@@ -28,7 +28,6 @@
 # Set OVERWRITE flag True to redo migration for files that are already migrated
 OVERWRITE = True
 
-import base64
 from datetime import datetime
 import xml.etree.ElementTree as ET
 import pathlib
@@ -224,13 +223,6 @@ for published_directory in pathlib.Path(sys.argv[1], 'published').glob('*/*/'):
       if suffix == '*.ditamap':
         old_string = str(pathlib.Path(published_directory.name, path.name))
         new_string = str(pathlib.Path(new_ditamap_dirname, new_filename))
-        ''' OBSOLETE: urlencode is hidden by replacing % by ~
-        new_string = str(pathlib.Path(urllib.parse.quote_plus(new_ditamap_dirname), new_filename))
-        # the new_ditamap_dirname may contain URI-encoded characters;
-        # these must be DOUBLE encoded when used has href in a ditamap file,
-        # because oXygen Author and Saxon XSLT will DECODE the href first,
-        # before going to the filesystem.
-        '''
         published_ditamaps.append((old_string, new_string))
         tqdm.write(f"DEBUG: storing for s&r {str(old_string)[-100:]} => {str(new_string)[-100:]}")
 

@@ -1513,12 +1513,13 @@ typeof sideModules != 'undefined' ? document.getElementById('sideModules').inser
 
   <xsl:template name="string-to-slug">
     <xsl:param name="text" select="''" />
-    <xsl:variable name="dodgyChars" select="' ,.#_-!?*:;=+'" />
-    <xsl:variable name="replacementChar" select="'------------'" />
-    <xsl:variable name="lowercased"><xsl:call-template name="string-to-lowercase"><xsl:with-param name="text" select="$text" /></xsl:call-template></xsl:variable>
+    <xsl:variable name="dodgyChars" select="' ,.#_-!?*:;=+⁺'" />
+    <xsl:variable name="replacementChar" select="'--------------'" />
+    <xsl:variable name="lowercased"><xsl:call-template name="string-to-lowercase"><xsl:with-param name="text" select="normalize-space($text)" /></xsl:call-template></xsl:variable>
     <xsl:variable name="escaped"><xsl:value-of select="translate( $lowercased, $dodgyChars, $replacementChar )" /></xsl:variable>
     <xsl:variable name="ampRemoved"><xsl:value-of select="replace( $escaped, '&amp;', 'and' )" /></xsl:variable>
-    <xsl:variable name="cleaned"><xsl:value-of select="replace( $ampRemoved, '--', '-' )" /></xsl:variable>
+    <xsl:variable name="newlineRemoved"><xsl:value-of select="replace( $ampRemoved, '&#xA;', '-' )" /></xsl:variable>
+    <xsl:variable name="cleaned"><xsl:value-of select="replace( $newlineRemoved, '--', '-' )" /></xsl:variable>
     <xsl:variable name="cleaned2"><xsl:value-of select="replace( $cleaned, '--', '-' )" /></xsl:variable>
     <xsl:value-of select="$cleaned2" />
   </xsl:template>
