@@ -4,8 +4,8 @@
   <!-- Usage:
          java net.sf.saxon.Transform 
           -xsl:import_localization.xslt 
-          -s:<from-translator-dir>/nl-nl/axk1438119593437.ditamap_59/toy1607439866732.xml 
-          -o:localization/nl-nl/axk1438119593437.ditamap_59/toy1607439866732.xml 
+          -s:<from-translator-dir>/nl-nl/xeb1523027388384_202307141139_002.xml 
+          -o:localization/nl-nl/xeb1523027388384_202307141139_002.xml 
 
          Creates a copy of the input dita file, with 'translate="..."' attributes removed. 
         

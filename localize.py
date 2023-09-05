@@ -5,7 +5,7 @@ import sys
 from tqdm import tqdm
 from saxonche import PySaxonProcessor
 
-# Run in WSL in /mnt/d/mcmsm as:
+# Run in WSL in /mnt/c/mcmsm as:
 #
 #   python3 localize.py published/en-us/<map_id>.ditamap_<version>
 #
@@ -44,6 +44,8 @@ print(f"(tested config: saxonche version 12 (saxon/c) with saxon 9.9)")
 #saxon_proc.set_cwd(str(pathlib.Path.cwd()))
 saxon_proc.set_catalog("catalog-wsl.xml")
 xslt_proc = saxon_proc.new_xslt30_processor()
+xslt_exec_localize = xslt_proc.compile_stylesheet(stylesheet_file="localize.xslt")
+xslt_exec_pretranslate = xslt_proc.compile_stylesheet(stylesheet_file="localize_pretranslate.xslt")
 
 # Ask user for languages
 LANGUAGES = """bg-bg
@@ -129,10 +131,9 @@ for published_file in published_files:
     if len(localization_files) == 0:
 
       # Generate localization file without pretranslated content in localization dir
-      xslt_proc.set_parameter("language",  \
+      xslt_exec_localize.set_parameter("language",  \
         saxon_proc.make_string_value(language))
-      xslt_proc.transform_to_file(stylesheet_file="localize.xslt", 
-        source_file=abspath(published_file),
+      xslt_exec_localize.transform_to_file(source_file=abspath(published_file),
         output_file=abspath(localization_file))
       tqdm.write(f"DITA file was untranslated: {localization_file}")
 
@@ -142,16 +143,15 @@ for published_file in published_files:
       most_recent_localization_file = max(localization_files, key=lambda f:f.name) 
       most_recent_localization_published_file = list(pathlib.Path("published", "en-us") \
        .glob(f"*/{most_recent_localization_file.name}"))[0]
-      xslt_proc.set_parameter("language",  \
+      xslt_exec_pretranslate.set_parameter("language",  \
         saxon_proc.make_string_value(language))
-      xslt_proc.set_parameter("old-publication",  \
+      xslt_exec_pretranslate.set_parameter("old-publication",  \
         saxon_proc.make_string_value(  \
           abspath(most_recent_localization_published_file)))
-      xslt_proc.set_parameter("old-translation",  \
+      xslt_exec_pretranslate.set_parameter("old-translation",  \
         saxon_proc.make_string_value(  
           abspath(most_recent_localization_file)))
-      xslt_proc.transform_to_file(stylesheet_file="localize_pretranslate.xslt", 
-        source_file=abspath(published_file),
+      xslt_exec_pretranslate.transform_to_file(source_file=abspath(published_file),
         output_file=abspath(localization_file))
       tqdm.write(f"DITA file pretranslated: {localization_file}; based on: {most_recent_localization_file}")
     

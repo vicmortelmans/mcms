@@ -17,7 +17,9 @@
   </xsl:template>
   <xsl:template match="*">
     <xsl:copy>
-      <xsl:attribute name="translate" select="'yes'"/>
+      <xsl:if test="not(@translate) and text() and normalize-space(string-join(text(),''))">
+        <xsl:attribute name="translate" select="'yes'"/>
+      </xsl:if>
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>

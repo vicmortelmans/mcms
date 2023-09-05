@@ -28,6 +28,7 @@
   <!-- mode recursive-attributes add @path and @serialization attributes to each node -->
   <xsl:template match="*" mode="recursive-attributes">
     <xsl:copy>
+      <!-- https://www.saxonica.com/html/documentation10/functions/fn/index.html -->
       <xsl:attribute name="path" select="path(.)"/>
       <xsl:attribute name="serialization" select="serialize(.)"/>
       <xsl:apply-templates select="@*|node()" mode="recursive-attributes"/>
@@ -49,7 +50,7 @@
       <xsl:otherwise>
         <!-- content has changed; no translation found :-( -->
         <xsl:copy>
-          <xsl:if test="not(@translate) and text()">
+          <xsl:if test="not(@translate) and text() and normalize-space(string-join(text(),''))">
             <xsl:attribute name="translate" select="'yes'"/>
           </xsl:if>
           <xsl:apply-templates select="@*|node()"/>
@@ -73,7 +74,7 @@
   <xsl:template match="@path|@serialization" mode="strip-attributes"/>
   <xsl:template match="*" mode="strip-attributes">
     <xsl:copy>
-      <xsl:if test="not(@translate) and text()">
+      <xsl:if test="not(@translate) and text() and normalize-space(string-join(text(),''))">
         <xsl:attribute name="translate" select="'no'"/>
       </xsl:if>
       <xsl:apply-templates select="@*|node()" mode="strip-attributes"/>

@@ -5,7 +5,7 @@ import sys
 import stat
 from tqdm import tqdm
 
-# Run in WSL in /mnt/d/mcmsm as:
+# Run in WSL in /mnt/c/mcmsm as:
 #
 #   python3 publish_localizations.py published/en-us/<map_id>.ditamap_<version>
 #
