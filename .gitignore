@@ -1,0 +1,7 @@
+dita-ot
+kit
+published
+localization
+authoring/*.zip
+*glass
+*.log
