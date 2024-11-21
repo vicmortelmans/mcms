@@ -1,7 +1,3 @@
-dita-ot/**
-!dita-ot/plugins/
-dita-ot/plugins/**
-!dita-ot/plugins/deepdapper/
 kit/
 published/
 localization/

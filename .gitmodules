@@ -1,3 +1,6 @@
 [submodule "dita-ot/plugins/deepdapper"]
 	path = dita-ot/plugins/deepdapper
 	url = git@github.com:vicmortelmans/deepdapper.git
+[submodule "dita-ot/plugins/BibleConfiguration"]
+	path = dita-ot/plugins/BibleConfiguration
+	url = git@github.com:vicmortelmans/BibleConfiguration.git
