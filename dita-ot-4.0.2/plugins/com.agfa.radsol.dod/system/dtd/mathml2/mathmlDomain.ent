@@ -1,4 +1,0 @@
-<!--highlight domain entities-->
-<!ENTITY % mml-d-ph "%MATHML.pfx;math">
-<!ENTITY % mml-d-fig  "equation">
-<!ENTITY mml-d-att "(topic mml-d)">
