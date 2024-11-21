@@ -1,0 +1,3 @@
+[submodule "dita-ot/plugins/deepdapper"]
+	path = dita-ot/plugins/deepdapper
+	url = git@github.com:vicmortelmans/deepdapper.git
